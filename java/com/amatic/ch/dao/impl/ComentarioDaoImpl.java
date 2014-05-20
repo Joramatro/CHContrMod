@@ -46,4 +46,20 @@ public class ComentarioDaoImpl implements ComentarioDao {
 
     }
 
+    @Override
+    public void commentAction(String action, long id) {
+	Comentario comentarioUpd = ofy().load().type(Comentario.class).id(id)
+		.safeGet();
+
+	if (action.equals("spam")) {
+	    comentarioUpd.setPublicado("N");
+	    ofy().save().entity(comentarioUpd);
+	} else if (action.equals("nospam")) {
+	    comentarioUpd.setPublicado("S");
+	    ofy().save().entity(comentarioUpd);
+	} else if (action.equals("delete")) {
+	    ofy().delete().entity(comentarioUpd).now();
+	}
+    }
+
 }

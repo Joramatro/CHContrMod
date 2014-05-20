@@ -13,4 +13,6 @@ public interface ComentarioDao {
 
     void update(Comentario comentario);
 
+    void commentAction(String action, long id);
+
 }

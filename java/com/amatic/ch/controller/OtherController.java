@@ -173,8 +173,8 @@ public class OtherController {
 
     public void sendMail(String msgBody, String subject) throws Exception {
 	try {
-	    log.warn("MAIL---------------: " + EMAILMAIL);
-	    log.warn("MAILCONTACT---------------: " + EMAILCONTACT);
+	    // log.warn("MAIL---------------: " + EMAILMAIL);
+	    // log.warn("MAILCONTACT---------------: " + EMAILCONTACT);
 	    Message msg = new MimeMessage(session);
 	    msg.setFrom(new InternetAddress(EMAILMAIL, "Jorge " + DOMAIN));
 

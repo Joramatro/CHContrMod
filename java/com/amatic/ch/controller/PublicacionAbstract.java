@@ -41,7 +41,7 @@ public abstract class PublicacionAbstract {
     private static final Logger log = LoggerFactory
 	    .getLogger(PublicacionAbstract.class);
     @Autowired
-    private PublicacionService publicacionService;
+    protected PublicacionService publicacionService;
     @Autowired
     private ComentarioService comentarioService;
 
@@ -56,6 +56,9 @@ public abstract class PublicacionAbstract {
 
     @Value("#{application['emailcontact']}")
     String EMAILCONTACT;
+
+    @Value("#{application['logo']}")
+    String LOGO;
 
     void guardarComentarioPub(HttpServletRequest request, String url,
 	    String nombre, String email, String puntos, String comentario,
@@ -129,12 +132,23 @@ public abstract class PublicacionAbstract {
 	    lComentarios.add(Ref.create(keyNuevoComentario));
 
 	    publicacionService.update(publicacion);
+
+	    String urlSpam = "http://www." + DOMAIN
+		    + "/comments?action=spam&c=" + keyNuevoComentario.getId();
+	    String urlNospam = "http://www." + DOMAIN
+		    + "/comments?action=nospam&c=" + keyNuevoComentario.getId();
+	    String urlDelete = "http://www." + DOMAIN
+		    + "/comments?action=delete&c=" + keyNuevoComentario.getId();
+	    ;
 	    this.sendMail(
-		    "Comentario con ip " + WebUtils.getClienAddress(request)
-			    + " y email: " + email + "\n Dejado en:" + url
-			    + "\n" + comentario + "\n Web:" + web
-			    + "\n Puntos:" + puntos + "\n Nombre:" + nombre,
-		    "Nuevo Comentario " + BRAND);
+		    "Comentario con IP: " + WebUtils.getClienAddress(request)
+			    + " - Email: " + email + "\nDejado en: http://www."
+			    + DOMAIN + "/" + url + "\n" + comentario + "\nWeb:"
+			    + web + "\nPuntos:" + puntos + "\nNombre:" + nombre
+			    + "\n\nSpam: " + urlSpam + "\n\nNospam: "
+			    + urlNospam + "\n\nDelete: " + urlDelete
+
+		    , "Nuevo Comentario " + BRAND);
 	}
 
     }
@@ -282,19 +296,21 @@ public abstract class PublicacionAbstract {
 	List<Publicacion> publicacionesMVA = publicacionService
 		.getPublicacionesMasVistas(WebConstants.SessionConstants.ARTICULO);
 
-	List<Comentario> comentarios = comentarioService
-		.getUltimosComentarios();
-	List<Comentario> ultimosComentarios = new ArrayList<Comentario>();
-	for (Comentario comentario : comentarios) {
-	    Comentario ultimoComentario = new Comentario();
-	    ultimoComentario.setComentario(Jsoup.clean(comentario
-		    .getComentario().replaceAll("<br />", " "), Whitelist
-		    .simpleText()));
-	    ultimoComentario.setNombre(comentario.getNombre());
-	    ultimoComentario.setPublicacion(comentario.getPublicacion());
-	    ultimosComentarios.add(ultimoComentario);
+	if (LOGO.equals("CSMG")) {
+	    List<Comentario> comentarios = comentarioService
+		    .getUltimosComentarios();
+	    List<Comentario> ultimosComentarios = new ArrayList<Comentario>();
+	    for (Comentario comentario : comentarios) {
+		Comentario ultimoComentario = new Comentario();
+		ultimoComentario.setComentario(Jsoup.clean(comentario
+			.getComentario().replaceAll("<br />", " "), Whitelist
+			.simpleText()));
+		ultimoComentario.setNombre(comentario.getNombre());
+		ultimoComentario.setPublicacion(comentario.getPublicacion());
+		ultimosComentarios.add(ultimoComentario);
+	    }
+	    model.addAttribute("comentarios", ultimosComentarios);
 	}
-	model.addAttribute("comentarios", ultimosComentarios);
 
 	model.addAttribute("publicacionesMVE", publicacionesMVE);
 
@@ -310,8 +326,8 @@ public abstract class PublicacionAbstract {
 
     public void sendMail(String msgBody, String subject) {
 	try {
-	    log.warn("MAIL---------------: " + EMAILMAIL);
-	    log.warn("MAILCONTACT---------------: " + EMAILCONTACT);
+	    // log.warn("MAIL---------------: " + EMAILMAIL);
+	    // log.warn("MAILCONTACT---------------: " + EMAILCONTACT);
 	    Message msg = new MimeMessage(session);
 	    msg.setFrom(new InternetAddress(EMAILMAIL, "Jorge " + DOMAIN));
 

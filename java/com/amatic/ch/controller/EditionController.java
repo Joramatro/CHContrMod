@@ -94,6 +94,8 @@ public class EditionController {
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
 	if (user == null) {
 	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
 	}
 	Publicacion publicacion = new Publicacion();
 	try {
@@ -214,29 +216,6 @@ public class EditionController {
 
     }
 
-    @RequestMapping(value = { "/edicion/cargarPublicacion" }, method = {
-	    RequestMethod.GET, RequestMethod.POST })
-    public String cargarPublicacion(ModelMap model,
-	    @RequestParam("titulo") String titulo,
-	    @RequestParam("tipo") String tipo, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException,
-	    NoSuchAlgorithmException {
-	HttpSession session = request.getSession();
-	User user = (User) session
-		.getAttribute(WebConstants.SessionConstants.RC_USER);
-	if (user == null) {
-	    response.sendRedirect("/editar");
-	}
-	Publicacion publicacion = publicacionService.getPublicacion(
-		WebUtils.SHA1(WebUtils.cleanTildes(titulo)), tipo);
-	session.setAttribute("publicacion", publicacion);
-
-	model.addAttribute("publicacion", publicacion);
-
-	return "edicion/editarPublicacion";
-
-    }
-
     @RequestMapping(value = { "/{url}/editar" }, method = { RequestMethod.GET,
 	    RequestMethod.POST })
     public String editarPublicacion(ModelMap model,
@@ -248,6 +227,8 @@ public class EditionController {
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
 	if (user == null) {
 	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
 	}
 
 	String key = WebUtils.SHA1(url.replaceAll("-", " "));
@@ -266,7 +247,12 @@ public class EditionController {
 	    String uri = request.getRequestURI();
 	    throw new UnknownResourceException("No existe el recurso: " + uri);
 	}
-	session.setAttribute("publicacion", publicacion);
+
+	request.getSession().setAttribute("tituloNuevaPublicacion",
+		publicacion.getKey());
+
+	request.getSession().setAttribute("tipoNuevaPublicacion",
+		publicacion.getTipo());
 
 	model.addAttribute("publicacion", publicacion);
 
@@ -314,10 +300,13 @@ public class EditionController {
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
 	if (user == null) {
 	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
 	}
 
-	Publicacion publicacion = (Publicacion) session
-		.getAttribute("publicacion");
+	Publicacion publicacion = publicacionService.getPublicacion(
+		(String) session.getAttribute("publicacionKey"),
+		(String) session.getAttribute("publicacionTipo"));
 	try {
 	    // articulo = articulo.replaceAll("\n", "");
 	    publicacion.setArticulo(articulo);
@@ -383,8 +372,19 @@ public class EditionController {
 	    @RequestParam("clase3") String clase3,
 	    @RequestParam("clase4") String clase4,
 	    @RequestParam("clase7") String clase7,
+	    @RequestParam("clase10") String clase10,
+	    @RequestParam("clase11") String clase11,
+	    @RequestParam("clase12") String clase12,
 	    @RequestParam("script") String script,
 	    @RequestParam("script2") String script2,
+	    @RequestParam("script21") String script21,
+	    @RequestParam("script22") String script22,
+	    @RequestParam("script31") String script31,
+	    @RequestParam("script32") String script32,
+	    @RequestParam("script41") String script41,
+	    @RequestParam("script42") String script42,
+	    @RequestParam("script51") String script51,
+	    @RequestParam("script52") String script52,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
 	    throws IOException, NoSuchAlgorithmException {
@@ -393,10 +393,13 @@ public class EditionController {
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
 	if (user == null) {
 	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
 	}
 	try {
-	    Publicacion publicacion = (Publicacion) session
-		    .getAttribute("publicacion");
+	    Publicacion publicacion = publicacionService.getPublicacion(
+		    (String) session.getAttribute("publicacionKey"),
+		    (String) session.getAttribute("publicacionTipo"));
 
 	    publicacion.setArticulo(articulo);
 	    publicacion.setPortada(portada);
@@ -416,9 +419,20 @@ public class EditionController {
 	    publicacion.setClase3(clase3);
 	    publicacion.setClase4(clase4);
 	    publicacion.setClase7(clase7);
+	    publicacion.setClase10(clase10);
+	    publicacion.setClase11(clase11);
+	    publicacion.setClase12(clase12);
 	    publicacion.setScript(script);
 	    publicacion.setScript2(script2);
 	    publicacion.setDisponible(disponible);
+	    publicacion.setScript21(script21);
+	    publicacion.setScript22(script22);
+	    publicacion.setScript31(script31);
+	    publicacion.setScript32(script32);
+	    publicacion.setScript41(script41);
+	    publicacion.setScript42(script42);
+	    publicacion.setScript51(script51);
+	    publicacion.setScript52(script52);
 
 	    // reemplazo tercera imagen
 	    List<String> lImagenes = publicacion.getlImages();
@@ -702,6 +716,8 @@ public class EditionController {
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
 	if (user == null) {
 	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
 	}
 
 	String key = WebUtils.SHA1(url.replaceAll("-", " "));
@@ -727,6 +743,105 @@ public class EditionController {
 	model.addAttribute("pubKeysFotos", publicacion.getlImagesKeys());
 
 	return "edicion/pubNombresFotos";
+
+    }
+
+    @RequestMapping(value = { "/{tipoedit}/{url}/editar" }, method = {
+	    RequestMethod.GET, RequestMethod.POST })
+    public String editarPublicacion(ModelMap model,
+	    @PathVariable("url") String url,
+	    @PathVariable("tipoedit") String tipoedit,
+	    HttpServletRequest request, HttpServletResponse response)
+	    throws IOException, NoSuchAlgorithmException {
+	HttpSession session = request.getSession();
+	User user = (User) session
+		.getAttribute(WebConstants.SessionConstants.RC_USER);
+	if (user == null) {
+	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
+	}
+
+	String tipo = "";
+	if (tipoedit.equals(WebConstants.SessionConstants.tipo1)) {
+	    tipo = WebConstants.SessionConstants.EBOOK;
+
+	} else if (tipoedit.equals(WebConstants.SessionConstants.tipo2)) {
+	    tipo = WebConstants.SessionConstants.ARTICULO;
+	} else if (tipoedit.equals(WebConstants.SessionConstants.tipo3)) {
+	    tipo = WebConstants.SessionConstants.ACCESORIO;
+	}
+	String key = WebUtils.SHA1(url.replaceAll("-", " "));
+	Publicacion publicacion = publicacionService.getPublicacion(key, tipo);
+	if (publicacion == null) {
+	    String uri = request.getRequestURI();
+	    throw new UnknownResourceException("No existe el recurso: " + uri);
+	}
+	session.setAttribute("publicacionKey", key);
+	session.setAttribute("publicacionTipo", tipo);
+
+	model.addAttribute("publicacion", publicacion);
+
+	return "edicion/editarPublicacion";
+
+    }
+
+    @RequestMapping(value = { "/{tipoedit}/{url}/infoFotos" }, method = { RequestMethod.GET })
+    public String verNombreFotos(ModelMap model,
+	    @PathVariable("url") String url,
+	    @PathVariable("tipoedit") String tipoedit,
+	    HttpServletRequest request, HttpServletResponse response)
+	    throws IOException, NoSuchAlgorithmException {
+	HttpSession session = request.getSession();
+	User user = (User) session
+		.getAttribute(WebConstants.SessionConstants.RC_USER);
+	if (user == null) {
+	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
+	}
+
+	String tipo = "";
+	if (tipoedit.equals(WebConstants.SessionConstants.tipo1)) {
+	    tipo = WebConstants.SessionConstants.EBOOK;
+	} else if (tipoedit.equals(WebConstants.SessionConstants.tipo2)) {
+	    tipo = WebConstants.SessionConstants.ARTICULO;
+	} else if (tipoedit.equals(WebConstants.SessionConstants.tipo3)) {
+	    tipo = WebConstants.SessionConstants.ACCESORIO;
+	}
+
+	String key = WebUtils.SHA1(url.replaceAll("-", " "));
+	Publicacion publicacion = publicacionService.getPublicacion(key, tipo);
+
+	model.addAttribute("pubNombresFotos", publicacion.getlImagesNames());
+	model.addAttribute("pubUrlsFotos", publicacion.getlImages());
+	model.addAttribute("pubKeysFotos", publicacion.getlImagesKeys());
+
+	return "edicion/pubNombresFotos";
+
+    }
+
+    @RequestMapping(value = { "/comments" }, method = { RequestMethod.GET })
+    public void modificarComentario(ModelMap model, HttpServletRequest request,
+	    HttpServletResponse response,
+	    @RequestParam("action") String action, @RequestParam("c") String c)
+	    throws IOException, NoSuchAlgorithmException {
+	HttpSession session = request.getSession();
+	User user = (User) session
+		.getAttribute(WebConstants.SessionConstants.RC_USER);
+	if (user == null) {
+	    response.sendRedirect("/editar");
+	    response.flushBuffer();
+	    response.reset();
+	}
+
+	if (action.equals("spam")) {
+	    comentarioService.commentAction("spam", Long.parseLong(c));
+	} else if (action.equals("nospam")) {
+	    comentarioService.commentAction("nospam", Long.parseLong(c));
+	} else if (action.equals("delete")) {
+	    comentarioService.commentAction("delete", Long.parseLong(c));
+	}
 
     }
 

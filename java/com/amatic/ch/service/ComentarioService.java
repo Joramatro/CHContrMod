@@ -27,4 +27,8 @@ public class ComentarioService {
 	this.comentarioDao.update(comentario);
     }
 
+    public void commentAction(String action, long id) {
+	this.comentarioDao.commentAction(action, id);
+    }
+
 }
