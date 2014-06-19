@@ -248,10 +248,10 @@ public class EditionController {
 	    throw new UnknownResourceException("No existe el recurso: " + uri);
 	}
 
-	request.getSession().setAttribute("tituloNuevaPublicacion",
+	request.getSession().setAttribute("publicacionKey",
 		publicacion.getKey());
 
-	request.getSession().setAttribute("tipoNuevaPublicacion",
+	request.getSession().setAttribute("publicacionTipo",
 		publicacion.getTipo());
 
 	model.addAttribute("publicacion", publicacion);

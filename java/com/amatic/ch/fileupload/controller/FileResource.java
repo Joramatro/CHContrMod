@@ -110,7 +110,7 @@ public class FileResource {
 
 	    int sizeImage = ImagesService.SERVING_SIZES_LIMIT;
 	    String url = imagesService.getServingUrl(ServingUrlOptions.Builder
-		    .withBlobKey(blobKey).crop(true).imageSize(sizeImage)
+		    .withBlobKey(blobKey).crop(false).imageSize(sizeImage)
 		    .secureUrl(true));
 
 	    Publicacion publicacion = pdi.getPublicacion(
@@ -209,7 +209,7 @@ public class FileResource {
 	    int sizePreview = 80;
 	    String urlPreview = imagesService
 		    .getServingUrl(ServingUrlOptions.Builder
-			    .withBlobKey(blobKey).crop(true)
+			    .withBlobKey(blobKey).crop(false)
 			    .imageSize(sizePreview).secureUrl(true));
 
 	    FileMeta meta = new FileMeta(name, size, url, urlPreview);
@@ -237,11 +237,12 @@ public class FileResource {
 	String url = "/rest/file/" + key;
 
 	ImagesService imagesService = ImagesServiceFactory.getImagesService();
-	ServingUrlOptions.Builder.withBlobKey(blobKey).crop(true).imageSize(80);
+	ServingUrlOptions.Builder.withBlobKey(blobKey).crop(false)
+		.imageSize(80);
 
 	String urlPreview = imagesService
 		.getServingUrl(ServingUrlOptions.Builder.withBlobKey(blobKey)
-			.crop(true).imageSize(80));
+			.crop(false).imageSize(80));
 
 	FileMeta meta = new FileMeta(name, size, url, urlPreview);
 
