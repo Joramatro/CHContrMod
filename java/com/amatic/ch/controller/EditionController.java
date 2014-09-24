@@ -170,9 +170,21 @@ public class EditionController {
 	    publicacion.setClase3(clase3);
 	    publicacion.setClase4(clase4);
 	    publicacion.setClase7(clase7);
-	    publicacion.setClase10(clase10);
-	    publicacion.setClase11(clase11);
-	    publicacion.setClase12(clase12);
+	    if (clase10 == null || clase10.equals("")) {
+		publicacion.setClase10(null);
+	    } else {
+		publicacion.setClase10(clase10);
+	    }
+	    if (clase11 == null || clase11.equals("")) {
+		publicacion.setClase11(null);
+	    } else {
+		publicacion.setClase11(clase11);
+	    }
+	    if (clase12 == null ||clase12.equals("")) {
+		publicacion.setClase12(null);
+	    } else {
+		publicacion.setClase12(clase12);
+	    }
 	    publicacion.setTipo(tipo);
 	    publicacion.setAutor(autor);
 	    publicacion.setGoogleAutor(googleAutor);
@@ -327,9 +339,21 @@ public class EditionController {
 	    publicacion.setClase3(clase3);
 	    publicacion.setClase4(clase4);
 	    publicacion.setClase7(clase7);
-	    publicacion.setClase10(clase10);
-	    publicacion.setClase11(clase11);
-	    publicacion.setClase12(clase12);
+	    if (clase10 == null || clase10.equals("")) {
+		publicacion.setClase10(null);
+	    } else {
+		publicacion.setClase10(clase10);
+	    }
+	    if (clase11 == null || clase11.equals("")) {
+		publicacion.setClase11(null);
+	    } else {
+		publicacion.setClase11(clase11);
+	    }
+	    if (clase12 == null || clase12.equals("")) {
+		publicacion.setClase12(null);
+	    } else {
+		publicacion.setClase12(clase12);
+	    }
 	    publicacion.setScript(script);
 	    publicacion.setScript2(script2);
 	    publicacion.setDisponible(disponible);

@@ -74,7 +74,7 @@ public abstract class PublicacionAbstract {
 		"", comentario, // Text to check
 		request.getParameterMap());
 
-	if (isSpam) {
+	if (isSpam || (comentario != null && comentario.length() < 3)) {
 	    // Mail.sendMail(
 	    // "Comentario Spam Akimet con ip "
 	    // + WebUtils.getClienAddress(request) + " y email: "
