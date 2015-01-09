@@ -164,6 +164,8 @@ public class EditionController {
 		}
 	    }
 
+	    articulo = articulo.replaceAll("</p></p>", "</p>");
+
 	    publicacion.setArticulo(articulo);
 	    publicacion.setClase1(clase1);
 	    publicacion.setClase2(clase2);
@@ -180,7 +182,7 @@ public class EditionController {
 	    } else {
 		publicacion.setClase11(clase11);
 	    }
-	    if (clase12 == null ||clase12.equals("")) {
+	    if (clase12 == null || clase12.equals("")) {
 		publicacion.setClase12(null);
 	    } else {
 		publicacion.setClase12(clase12);

@@ -160,31 +160,37 @@ public abstract class PublicacionAbstract {
 	List<String> categorias = new ArrayList<String>();
 	for (Publicacion publicacion : publicaciones) {
 	    if (!publicacion.getClase1().equals("")
-		    && !categorias.contains(publicacion.getClase1())) {
+		    && !categorias.contains(publicacion.getClase1())
+		    && !publicacion.getClase1().contains(",")) {
 		categorias.add(publicacion.getClase1());
 	    }
 	    if (!publicacion.getClase2().equals("")
-		    && !categorias.contains(publicacion.getClase2())) {
+		    && !categorias.contains(publicacion.getClase2())
+		    && !publicacion.getClase2().contains(",")) {
 		categorias.add(publicacion.getClase2());
 	    }
 	    if (publicacion.getClase7() != null
 		    && !publicacion.getClase7().equals("")
-		    && !categorias.contains(publicacion.getClase7())) {
+		    && !categorias.contains(publicacion.getClase7())
+		    && !publicacion.getClase7().contains(",")) {
 		categorias.add(publicacion.getClase7());
 	    }
 	    if (publicacion.getClase10() != null
 		    && !publicacion.getClase10().equals("")
-		    && !categorias.contains(publicacion.getClase10())) {
+		    && !categorias.contains(publicacion.getClase10())
+		    && !publicacion.getClase10().contains(",")) {
 		categorias.add(publicacion.getClase10());
 	    }
 	    if (publicacion.getClase11() != null
 		    && !publicacion.getClase11().equals("")
-		    && !categorias.contains(publicacion.getClase11())) {
+		    && !categorias.contains(publicacion.getClase11())
+		    && !publicacion.getClase11().contains(",")) {
 		categorias.add(publicacion.getClase11());
 	    }
 	    if (publicacion.getClase12() != null
 		    && !publicacion.getClase12().equals("")
-		    && !categorias.contains(publicacion.getClase12())) {
+		    && !categorias.contains(publicacion.getClase12())
+		    && !publicacion.getClase12().contains(",")) {
 		categorias.add(publicacion.getClase12());
 	    }
 	}
