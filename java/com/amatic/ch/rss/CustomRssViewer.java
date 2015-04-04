@@ -24,12 +24,15 @@ public class CustomRssViewer extends AbstractRssFeedView {
     @Value("#{application['brand']}")
     String BRAND;
 
+    @Value("#{application['description']}")
+    String DESCRIPTION;
+
     @Override
     protected void buildFeedMetadata(Map<String, Object> model, Channel feed,
 	    HttpServletRequest request) {
 
 	feed.setTitle(BRAND);
-	feed.setDescription("Toda la información para que puedas comprar online el móvil más adecuado a tus necesidades y comparar precios y móviles de distintos tipos, smartphones, android, libres y baratos, de marcas como Samsung, HTC, LG, Nokia, Motorola, Sony Ericsson, Blackberry o iPhone");
+	feed.setDescription(DESCRIPTION);
 	feed.setLink("http://www." + DOMAIN);
 
 	super.buildFeedMetadata(model, feed, request);
