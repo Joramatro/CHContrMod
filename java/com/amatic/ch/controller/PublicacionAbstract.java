@@ -41,9 +41,9 @@ public abstract class PublicacionAbstract {
     private static final Logger log = LoggerFactory
 	    .getLogger(PublicacionAbstract.class);
     @Autowired
-    protected PublicacionService publicacionService;
+    PublicacionService publicacionService;
     @Autowired
-    private ComentarioService comentarioService;
+    ComentarioService comentarioService;
 
     @Value("#{application['domain']}")
     String DOMAIN;

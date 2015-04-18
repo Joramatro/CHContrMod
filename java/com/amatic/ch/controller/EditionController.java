@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,6 @@ import com.amatic.ch.dto.Comentario;
 import com.amatic.ch.dto.Publicacion;
 import com.amatic.ch.dto.User;
 import com.amatic.ch.exception.UnknownResourceException;
-import com.amatic.ch.fileupload.controller.FileResource;
 import com.amatic.ch.service.ComentarioService;
 import com.amatic.ch.service.PublicacionService;
 import com.amatic.ch.utils.WebUtils;
@@ -43,6 +43,9 @@ public class EditionController {
     @Autowired
     private ComentarioService comentarioService;
 
+    @Value("#{application['logo']}")
+    String logo;
+
     @RequestMapping(value = { "/edicion/nuevo" }, method = { RequestMethod.GET,
 	    RequestMethod.POST })
     public String getEdicion(ModelMap model, HttpServletRequest request,
@@ -53,7 +56,8 @@ public class EditionController {
     }
 
     @RequestMapping(value = { "/edicion/guardarPublicacion" }, method = { RequestMethod.POST })
-    public void guardarPublicacion(ModelMap model,
+    public void guardarPublicacion(
+	    ModelMap model,
 	    @RequestParam("titulo") String titulo,
 	    @RequestParam("descripcion") String descripcion,
 	    @RequestParam("resumen") String resumen,
@@ -85,6 +89,20 @@ public class EditionController {
 	    @RequestParam("script42") String script42,
 	    @RequestParam("script51") String script51,
 	    @RequestParam("script52") String script52,
+	    @RequestParam(value = "script61", required = false) String script61,
+	    @RequestParam(value = "script62", required = false) String script62,
+	    @RequestParam(value = "script71", required = false) String script71,
+	    @RequestParam(value = "script72", required = false) String script72,
+	    @RequestParam(value = "script81", required = false) String script81,
+	    @RequestParam(value = "script82", required = false) String script82,
+	    @RequestParam(value = "script91", required = false) String script91,
+	    @RequestParam(value = "script92", required = false) String script92,
+	    @RequestParam(value = "script101", required = false) String script101,
+	    @RequestParam(value = "script102", required = false) String script102,
+	    @RequestParam(value = "script111", required = false) String script111,
+	    @RequestParam(value = "script112", required = false) String script112,
+	    @RequestParam(value = "script121", required = false) String script121,
+	    @RequestParam(value = "script122", required = false) String script122,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
 	    throws IOException, NoSuchAlgorithmException {
@@ -133,21 +151,52 @@ public class EditionController {
 	    articulo = articulo.replaceAll("\n", "</p><p>");
 	    articulo = articulo.concat("</p>");
 
+	    String outpath = "ofertas";
+	    // Para antiguos como cce
+	    if (logo.startsWith("C")) {
+		outpath = "venta/principal";
+	    }
+
 	    articulo = articulo.replaceAll("<a>",
-		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/venta/principal/"
-			    + publicacion.getUrl() + "\">");
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "\">");
+	    articulo = articulo.replaceAll("<a1>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "\">");
 	    articulo = articulo.replaceAll("<a2>",
-		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/venta/principal/"
-			    + publicacion.getUrl() + "-2\">");
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-2\">");
 	    articulo = articulo.replaceAll("<a3>",
-		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/venta/principal/"
-			    + publicacion.getUrl() + "-3\">");
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-3\">");
 	    articulo = articulo.replaceAll("<a4>",
-		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/venta/principal/"
-			    + publicacion.getUrl() + "-4\">");
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-4\">");
 	    articulo = articulo.replaceAll("<a5>",
-		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/venta/principal/"
-			    + publicacion.getUrl() + "-5\">");
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-5\">");
+
+	    articulo = articulo.replaceAll("<a6>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-6\">");
+	    articulo = articulo.replaceAll("<a7>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-7\">");
+	    articulo = articulo.replaceAll("<a8>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-8\">");
+	    articulo = articulo.replaceAll("<a9>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-9\">");
+	    articulo = articulo.replaceAll("<a10>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-10\">");
+	    articulo = articulo.replaceAll("<a11>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-11\">");
+	    articulo = articulo.replaceAll("<a12>",
+		    "<a class=\"linkContextual\" target=\"_blank\" href=\"/"
+			    + outpath + "/" + publicacion.getUrl() + "-12\">");
 
 	    articulo = articulo.replaceAll("<href *",
 		    "<a target=\"_blank\" href=");
@@ -206,6 +255,21 @@ public class EditionController {
 	    publicacion.setScript42(script42);
 	    publicacion.setScript51(script51);
 	    publicacion.setScript52(script52);
+
+	    publicacion.setScript61(script61);
+	    publicacion.setScript62(script62);
+	    publicacion.setScript71(script71);
+	    publicacion.setScript72(script72);
+	    publicacion.setScript81(script81);
+	    publicacion.setScript82(script82);
+	    publicacion.setScript91(script91);
+	    publicacion.setScript92(script92);
+	    publicacion.setScript101(script101);
+	    publicacion.setScript102(script102);
+	    publicacion.setScript111(script111);
+	    publicacion.setScript112(script112);
+	    publicacion.setScript121(script121);
+	    publicacion.setScript122(script122);
 
 	    publicacionService.crearPublicacion(publicacion);
 	} catch (Exception e) {
@@ -275,7 +339,8 @@ public class EditionController {
     }
 
     @RequestMapping(value = { "/edicion/guardarEdicionPublicacion" }, method = { RequestMethod.POST })
-    public void guardarEdicionPublicacion(ModelMap model,
+    public void guardarEdicionPublicacion(
+	    ModelMap model,
 	    @RequestParam("articulo") String articulo,
 	    @RequestParam("portada") String portada,
 	    @RequestParam("destacado") String destacado,
@@ -306,6 +371,20 @@ public class EditionController {
 	    @RequestParam("script42") String script42,
 	    @RequestParam("script51") String script51,
 	    @RequestParam("script52") String script52,
+	    @RequestParam(value = "script61", required = false) String script61,
+	    @RequestParam(value = "script62", required = false) String script62,
+	    @RequestParam(value = "script71", required = false) String script71,
+	    @RequestParam(value = "script72", required = false) String script72,
+	    @RequestParam(value = "script81", required = false) String script81,
+	    @RequestParam(value = "script82", required = false) String script82,
+	    @RequestParam(value = "script91", required = false) String script91,
+	    @RequestParam(value = "script92", required = false) String script92,
+	    @RequestParam(value = "script101", required = false) String script101,
+	    @RequestParam(value = "script102", required = false) String script102,
+	    @RequestParam(value = "script111", required = false) String script111,
+	    @RequestParam(value = "script112", required = false) String script112,
+	    @RequestParam(value = "script121", required = false) String script121,
+	    @RequestParam(value = "script122", required = false) String script122,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
 	    throws IOException, NoSuchAlgorithmException {
@@ -368,6 +447,21 @@ public class EditionController {
 	    publicacion.setScript51(script51);
 	    publicacion.setScript52(script52);
 
+	    publicacion.setScript61(script61);
+	    publicacion.setScript62(script62);
+	    publicacion.setScript71(script71);
+	    publicacion.setScript72(script72);
+	    publicacion.setScript81(script81);
+	    publicacion.setScript82(script82);
+	    publicacion.setScript91(script91);
+	    publicacion.setScript92(script92);
+	    publicacion.setScript101(script101);
+	    publicacion.setScript102(script102);
+	    publicacion.setScript111(script111);
+	    publicacion.setScript112(script112);
+	    publicacion.setScript121(script121);
+	    publicacion.setScript122(script122);
+
 	    publicacionService.update(publicacion);
 	} catch (Exception e) {
 	    log.error("error en editioncontroller", e);
@@ -380,7 +474,8 @@ public class EditionController {
 
     @RequestMapping(value = { "/edicion/guardarEdicionFotosPub" }, method = {
 	    RequestMethod.GET, RequestMethod.POST })
-    public void guardarFotosEdicionPublicacion(ModelMap model,
+    public void guardarFotosEdicionPublicacion(
+	    ModelMap model,
 	    @RequestParam("articulo") String articulo,
 	    @RequestParam("portada") String portada,
 	    @RequestParam("destacado") String destacado,
@@ -411,6 +506,20 @@ public class EditionController {
 	    @RequestParam("script42") String script42,
 	    @RequestParam("script51") String script51,
 	    @RequestParam("script52") String script52,
+	    @RequestParam(value = "script61", required = false) String script61,
+	    @RequestParam(value = "script62", required = false) String script62,
+	    @RequestParam(value = "script71", required = false) String script71,
+	    @RequestParam(value = "script72", required = false) String script72,
+	    @RequestParam(value = "script81", required = false) String script81,
+	    @RequestParam(value = "script82", required = false) String script82,
+	    @RequestParam(value = "script91", required = false) String script91,
+	    @RequestParam(value = "script92", required = false) String script92,
+	    @RequestParam(value = "script101", required = false) String script101,
+	    @RequestParam(value = "script102", required = false) String script102,
+	    @RequestParam(value = "script111", required = false) String script111,
+	    @RequestParam(value = "script112", required = false) String script112,
+	    @RequestParam(value = "script121", required = false) String script121,
+	    @RequestParam(value = "script122", required = false) String script122,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
 	    throws IOException, NoSuchAlgorithmException {
@@ -460,30 +569,46 @@ public class EditionController {
 	    publicacion.setScript51(script51);
 	    publicacion.setScript52(script52);
 
-	    // reemplazo tercera imagen
-	    List<String> lImagenes = publicacion.getlImages();
-	    if (lImagenes.size() >= 3) {
-		articulo = articulo
-			.replaceAll(
-				"<br><a target=\"_blank\" href=\"/venta/principal/"
-					+ publicacion.getUrl()
-					+ "\"><img src=\""
-					+ lImagenes.get(2)
-					+ "\" alt=\""
-					+ publicacion.getDescripcion()
-					+ "\" style=\"width:430px; height:400px; margin-left: 28%;\"/></a><br> ",
-				"<img>");
-	    }
+	    publicacion.setScript61(script61);
+	    publicacion.setScript62(script62);
+	    publicacion.setScript71(script71);
+	    publicacion.setScript72(script72);
+	    publicacion.setScript81(script81);
+	    publicacion.setScript82(script82);
+	    publicacion.setScript91(script91);
+	    publicacion.setScript92(script92);
+	    publicacion.setScript101(script101);
+	    publicacion.setScript102(script102);
+	    publicacion.setScript111(script111);
+	    publicacion.setScript112(script112);
+	    publicacion.setScript121(script121);
+	    publicacion.setScript122(script122);
+
+	    // // reemplazo tercera imagen
+	    // List<String> lImagenes = publicacion.getlImages();
+	    // if (lImagenes.size() >= 3) {
+	    // articulo = articulo
+	    // .replaceAll(
+	    // "<br><a target=\"_blank\" href=\"/venta/principal/"
+	    // + publicacion.getUrl()
+	    // + "\"><img src=\""
+	    // + lImagenes.get(2)
+	    // + "\" alt=\""
+	    // + publicacion.getDescripcion()
+	    // +
+	    // "\" style=\"width:430px; height:400px; margin-left: 28%;\"/></a><br> ",
+	    // "<img>");
+	    // }
 
 	    request.getSession().setAttribute("tituloNuevaPublicacion",
 		    publicacion.getKey());
 
 	    request.getSession().setAttribute("tipoNuevaPublicacion",
 		    publicacion.getTipo());
-	    FileResource fr = new FileResource();
-	    for (String image : publicacion.getlImagesKeys()) {
-		fr.delete(image, request, response);
-	    }
+	    // FileResource fr = new FileResource();
+	    // for (String image : publicacion.getlImagesKeys()) {
+	    // fr.delete(image, request, response);
+	    // }
 
 	    publicacion.getlImages().clear();
 	    publicacion.getlImagesKeys().clear();

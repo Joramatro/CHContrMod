@@ -119,6 +119,35 @@ public class Publicacion implements Serializable {
     @Index
     String script52;
 
+    @Index
+    String script61;
+    @Index
+    String script62;
+    @Index
+    String script71;
+    @Index
+    String script72;
+    @Index
+    String script81;
+    @Index
+    String script82;
+    @Index
+    String script91;
+    @Index
+    String script92;
+    @Index
+    String script101;
+    @Index
+    String script102;
+    @Index
+    String script111;
+    @Index
+    String script112;
+    @Index
+    String script121;
+    @Index
+    String script122;
+
     public String getAutor() {
 	return autor;
     }
@@ -555,6 +584,118 @@ public class Publicacion implements Serializable {
 
     public void setClase15(String clase15) {
 	this.clase15 = clase15;
+    }
+
+    public String getScript61() {
+	return script61;
+    }
+
+    public void setScript61(String script61) {
+	this.script61 = script61;
+    }
+
+    public String getScript62() {
+	return script62;
+    }
+
+    public void setScript62(String script62) {
+	this.script62 = script62;
+    }
+
+    public String getScript71() {
+	return script71;
+    }
+
+    public void setScript71(String script71) {
+	this.script71 = script71;
+    }
+
+    public String getScript72() {
+	return script72;
+    }
+
+    public void setScript72(String script72) {
+	this.script72 = script72;
+    }
+
+    public String getScript81() {
+	return script81;
+    }
+
+    public void setScript81(String script81) {
+	this.script81 = script81;
+    }
+
+    public String getScript82() {
+	return script82;
+    }
+
+    public void setScript82(String script82) {
+	this.script82 = script82;
+    }
+
+    public String getScript91() {
+	return script91;
+    }
+
+    public void setScript91(String script91) {
+	this.script91 = script91;
+    }
+
+    public String getScript92() {
+	return script92;
+    }
+
+    public void setScript92(String script92) {
+	this.script92 = script92;
+    }
+
+    public String getScript101() {
+	return script101;
+    }
+
+    public void setScript101(String script101) {
+	this.script101 = script101;
+    }
+
+    public String getScript102() {
+	return script102;
+    }
+
+    public void setScript102(String script102) {
+	this.script102 = script102;
+    }
+
+    public String getScript111() {
+	return script111;
+    }
+
+    public void setScript111(String script111) {
+	this.script111 = script111;
+    }
+
+    public String getScript112() {
+	return script112;
+    }
+
+    public void setScript112(String script112) {
+	this.script112 = script112;
+    }
+
+    public String getScript121() {
+	return script121;
+    }
+
+    public void setScript121(String script121) {
+	this.script121 = script121;
+    }
+
+    public String getScript122() {
+	return script122;
+    }
+
+    public void setScript122(String script122) {
+	this.script122 = script122;
     }
 
 }

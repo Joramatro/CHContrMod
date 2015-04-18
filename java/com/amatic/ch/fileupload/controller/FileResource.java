@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.amatic.ch.dao.impl.PublicacionDaoImpl;
 import com.amatic.ch.dto.Publicacion;
@@ -51,6 +52,9 @@ public class FileResource {
     // @Autowired
     // private PublicacionService publicacionService;
     PublicacionDaoImpl pdi = new PublicacionDaoImpl();
+
+    @Value("#{application['domain']}")
+    String DOMAIN;
 
     /* step 1. get a unique url */
 
@@ -126,25 +130,27 @@ public class FileResource {
 	    String articulo = publicacion.getArticulo();
 
 	    String replaceimg = "<br>";
-	    if (!publicacion.getScript().equals("#") && lImages.size() == 3) {
-		replaceimg += "<a target=\"_blank\" href=\"/venta/principal/"
-			+ publicacion.getUrl() + "\">";
-	    }
+	    // if (!publicacion.getScript().equals("#") && lImages.size() == 3)
+	    // {
+	    // replaceimg += "<a target=\"_blank\" href=\"/venta/principal/"
+	    // + publicacion.getUrl() + "\">";
+	    // }
 	    replaceimg += "<img id=\"_image6\" itemprop=\"image\"  src=\""
 		    + url
 		    + "\" alt=\""
 		    + publicacion.getDescripcion()
-		    + "\" style=\"width:345px; height:375px; margin-left: 28%;\"/>";
-	    if (!publicacion.getScript().equals("#") && lImages.size() == 3) {
-		replaceimg += "</a>";
-	    }
+		    + "\" style=\"width:510px; height:375px; margin-left: 22%;\"/>";
+	    // if (!publicacion.getScript().equals("#") && lImages.size() == 3)
+	    // {
+	    // replaceimg += "</a>";
+	    // }
 	    replaceimg += "<br> ";
 
-	    if (lImages.size() == 3) {
-		articulo = articulo.replaceAll("<img>", replaceimg);
-
-		publicacion.setArticulo(articulo);
-	    }
+	    // if (lImages.size() == 3) {
+	    // articulo = articulo.replaceAll("<img>", replaceimg);
+	    //
+	    // publicacion.setArticulo(articulo);
+	    // }
 	    if (lImages.size() == 1) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
