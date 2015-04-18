@@ -31,14 +31,19 @@ public class RssSitemapController {
     @Value("#{application['domain']}")
     String DOMAIN;
 
+    @Value("#{application['logo']}")
+    String logo;
+
     @RequestMapping(value = "/rssfeed", method = RequestMethod.GET)
     public ModelAndView getFeedInRss() throws UnsupportedEncodingException {
 
 	List<SampleContent> items = new ArrayList<SampleContent>();
 
-	List<Publicacion> publicacionesEbooks = publicacionService
-		.getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
-
+	List<Publicacion> publicacionesEbooks = null;
+	if (logo.startsWith("C")) {
+	    publicacionesEbooks = publicacionService
+		    .getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
+	}
 	List<Publicacion> publicacionesBlog = publicacionService
 		.getUltimasPublicaciones(WebConstants.SessionConstants.ARTICULO);
 
@@ -103,10 +108,13 @@ public class RssSitemapController {
 	List<Publicacion> publicacionesBlog = publicacionService
 		.getPublicaciones(WebConstants.SessionConstants.ARTICULO);
 
-	List<Publicacion> publicacionesEbooks = publicacionService
-		.getPublicaciones(WebConstants.SessionConstants.EBOOK);
+	List<Publicacion> publicacionesEbooks = null;
+	if (logo.startsWith("C")) {
+	    publicacionesEbooks = publicacionService
+		    .getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
 
-	model.addAttribute("publicacionesEbooks", publicacionesEbooks);
+	    model.addAttribute("publicacionesEbooks", publicacionesEbooks);
+	}
 
 	model.addAttribute("publicacionesBlog", publicacionesBlog);
 
