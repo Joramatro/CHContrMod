@@ -43,33 +43,34 @@ public class RssSitemapController {
 	if (logo.startsWith("C")) {
 	    publicacionesEbooks = publicacionService
 		    .getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
+
+	    for (Publicacion publicacionEbook : publicacionesEbooks) {
+		SampleContent content = new SampleContent();
+		content.setTitle(publicacionEbook.getTitulo());
+		content.setAuthor(publicacionEbook.getAutor());
+		content.setUrl("http://www." + DOMAIN + "/"
+			+ publicacionEbook.getUrl());
+		content.setSummary(Jsoup.parse(publicacionEbook.getArticulo())
+			.text());
+		Category category = new Category();
+		category.setValue(publicacionEbook.getClase1());
+		content.getCategories().add(category);
+		if (publicacionEbook.getClase2() != null
+			&& !publicacionEbook.getClase2().equals("")) {
+		    Category category2 = new Category();
+		    category2.setValue(publicacionEbook.getClase2());
+		    content.getCategories().add(category2);
+		}
+		content.setDescription(publicacionEbook.getDescripcion());
+		content.setComments("http://www." + DOMAIN + "/"
+			+ publicacionEbook.getUrl() + "/#comments");
+		content.setCreatedDate(publicacionEbook.getFechaCreacion());
+		items.add(content);
+	    }
 	}
 	List<Publicacion> publicacionesBlog = publicacionService
 		.getUltimasPublicaciones(WebConstants.SessionConstants.ARTICULO);
 
-	for (Publicacion publicacionEbook : publicacionesEbooks) {
-	    SampleContent content = new SampleContent();
-	    content.setTitle(publicacionEbook.getTitulo());
-	    content.setAuthor(publicacionEbook.getAutor());
-	    content.setUrl("http://www." + DOMAIN + "/"
-		    + publicacionEbook.getUrl());
-	    content.setSummary(Jsoup.parse(publicacionEbook.getArticulo())
-		    .text());
-	    Category category = new Category();
-	    category.setValue(publicacionEbook.getClase1());
-	    content.getCategories().add(category);
-	    if (publicacionEbook.getClase2() != null
-		    && !publicacionEbook.getClase2().equals("")) {
-		Category category2 = new Category();
-		category2.setValue(publicacionEbook.getClase2());
-		content.getCategories().add(category2);
-	    }
-	    content.setDescription(publicacionEbook.getDescripcion());
-	    content.setComments("http://www." + DOMAIN + "/"
-		    + publicacionEbook.getUrl() + "/#comments");
-	    content.setCreatedDate(publicacionEbook.getFechaCreacion());
-	    items.add(content);
-	}
 	for (Publicacion publicacionArticulo : publicacionesBlog) {
 	    SampleContent content = new SampleContent();
 	    content.setTitle(publicacionArticulo.getTitulo());
