@@ -117,7 +117,8 @@ public class EditionController {
 	}
 	Publicacion publicacion = new Publicacion();
 	try {
-	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(titulo)));
+	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(titulo
+		    .toLowerCase())));
 	    publicacion.setNumVisitas(0);
 	    publicacion.setTitulo(titulo);
 	    publicacion.setUser(Ref.create(Key.create(User.class,
@@ -309,15 +310,16 @@ public class EditionController {
 	    response.reset();
 	}
 
-	String key = WebUtils.SHA1(url.replaceAll("-", " "));
-	Publicacion publicacion = publicacionService.getPublicacion(key,
-		WebConstants.SessionConstants.EBOOK);
+	String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
+		.toLowerCase());
+	Publicacion publicacion = publicacionService.getPublicacion(
+		keyNormalizada, WebConstants.SessionConstants.EBOOK);
 	if (publicacion == null) {
-	    publicacion = publicacionService.getPublicacion(key,
+	    publicacion = publicacionService.getPublicacion(keyNormalizada,
 		    WebConstants.SessionConstants.ARTICULO);
 	}
 	if (publicacion == null) {
-	    publicacion = publicacionService.getPublicacion(key,
+	    publicacion = publicacionService.getPublicacion(keyNormalizada,
 		    WebConstants.SessionConstants.ACCESORIO);
 	}
 
@@ -407,7 +409,8 @@ public class EditionController {
 	    publicacion.setDestacado(destacado);
 	    publicacion.setTipo(tipo);
 	    publicacion.setTitulo(titulo);
-	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(titulo)));
+	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(titulo
+		    .toLowerCase())));
 	    publicacion.setTitulo2(titulo2);
 	    publicacion.setResumen(resumen);
 	    publicacion.setDescripcion(descripcion);
@@ -541,7 +544,8 @@ public class EditionController {
 	    publicacion.setDestacado(destacado);
 	    publicacion.setTipo(tipo);
 	    publicacion.setTitulo(titulo);
-	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(titulo)));
+	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(titulo
+		    .toLowerCase())));
 	    publicacion.setTitulo2(titulo2);
 	    publicacion.setResumen(resumen);
 	    publicacion.setDescripcion(descripcion);
@@ -640,7 +644,7 @@ public class EditionController {
 	HttpSession session = request.getSession();
 
 	Publicacion publicacion = publicacionService.getPublicacion(
-		WebUtils.SHA1("Kindle"), WebConstants.SessionConstants.EBOOK);
+		WebUtils.SHA1("kindle"), WebConstants.SessionConstants.EBOOK);
 
 	List<Ref<Comentario>> lComentarios = publicacion.getlComentarios();
 	lComentarios.remove(1);
@@ -711,10 +715,7 @@ public class EditionController {
 		.getPublicaciones(WebConstants.SessionConstants.EBOOK);
 	for (Publicacion publicacion : publicaciones) {
 	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(publicacion
-		    .getTitulo())));
-	    if (publicacion.getClase7() == null) {
-		publicacion.setClase7("");
-	    }
+		    .getTitulo().toLowerCase())));
 	    // if (publicacion.getClase3() == null) {
 	    // publicacion.setClase3("");
 	    // }
@@ -754,10 +755,7 @@ public class EditionController {
 
 	for (Publicacion publicacion : publicacionesblog) {
 	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(publicacion
-		    .getTitulo())));
-	    if (publicacion.getClase7() == null) {
-		publicacion.setClase7("");
-	    }
+		    .getTitulo().toLowerCase())));
 	    // if (publicacion.getClase3() == null) {
 	    // publicacion.setClase3("");
 	    // }
@@ -794,45 +792,46 @@ public class EditionController {
 
 	List<Publicacion> publicacionesExtras = publicacionService
 		.getPublicaciones(WebConstants.SessionConstants.ACCESORIO);
-
-	for (Publicacion publicacion : publicacionesExtras) {
-	    publicacion.setKey(WebUtils.SHA1(WebUtils.cleanTildes(publicacion
-		    .getTitulo())));
-	    if (publicacion.getClase7() == null) {
-		publicacion.setClase7("");
+	if (publicacionesExtras != null) {
+	    for (Publicacion publicacion : publicacionesExtras) {
+		publicacion.setKey(WebUtils.SHA1(WebUtils
+			.cleanTildes(publicacion.getTitulo().toLowerCase())));
+		// if (publicacion.getClase7() == null) {
+		// publicacion.setClase7("");
+		// }
+		// if (publicacion.getClase3() == null) {
+		// publicacion.setClase3("");
+		// }
+		// if (publicacion.getClase4() == null) {
+		// publicacion.setClase4("");
+		// }
+		// if (publicacion.getDescPortada() == null) {
+		// publicacion.setDescPortada("");
+		// }
+		// if (publicacion.getDestacado() == null) {
+		// publicacion.setDestacado("N");
+		// }
+		// if (publicacion.getGoogleAutor() == null) {
+		// publicacion
+		// .setGoogleAutor("https://plus.google.com/u/0/108657243775074009859?rel=author");
+		// }
+		// if (publicacion.getlImagesNames() == null) {
+		// publicacion.setlImagesNames(new ArrayList<String>());
+		// }
+		// if (publicacion.getNumeros() == null) {
+		// publicacion.setNumeros("N");
+		// }
+		// if (publicacion.getPortada() == null) {
+		// publicacion.setPortada("N");
+		// }
+		// if (publicacion.getTituloPortada() == null) {
+		// publicacion.setTituloPortada("");
+		// }
+		// if (publicacion.getDisponible() == null) {
+		// publicacion.setDisponible("N");
+		// }
+		publicacionService.update(publicacion);
 	    }
-	    // if (publicacion.getClase3() == null) {
-	    // publicacion.setClase3("");
-	    // }
-	    // if (publicacion.getClase4() == null) {
-	    // publicacion.setClase4("");
-	    // }
-	    // if (publicacion.getDescPortada() == null) {
-	    // publicacion.setDescPortada("");
-	    // }
-	    // if (publicacion.getDestacado() == null) {
-	    // publicacion.setDestacado("N");
-	    // }
-	    // if (publicacion.getGoogleAutor() == null) {
-	    // publicacion
-	    // .setGoogleAutor("https://plus.google.com/u/0/108657243775074009859?rel=author");
-	    // }
-	    // if (publicacion.getlImagesNames() == null) {
-	    // publicacion.setlImagesNames(new ArrayList<String>());
-	    // }
-	    // if (publicacion.getNumeros() == null) {
-	    // publicacion.setNumeros("N");
-	    // }
-	    // if (publicacion.getPortada() == null) {
-	    // publicacion.setPortada("N");
-	    // }
-	    // if (publicacion.getTituloPortada() == null) {
-	    // publicacion.setTituloPortada("");
-	    // }
-	    // if (publicacion.getDisponible() == null) {
-	    // publicacion.setDisponible("N");
-	    // }
-	    publicacionService.update(publicacion);
 	}
     }
 
@@ -871,14 +870,15 @@ public class EditionController {
 	    response.reset();
 	}
 
-	String key = WebUtils.SHA1(url.replaceAll("-", " "));
-	Publicacion publicacion = publicacionService.getPublicacion(key,
-		WebConstants.SessionConstants.EBOOK);
+	String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
+		.toLowerCase());
+	Publicacion publicacion = publicacionService.getPublicacion(
+		keyNormalizada, WebConstants.SessionConstants.EBOOK);
 	if (publicacion == null) {
-	    publicacion = publicacionService.getPublicacion(key,
+	    publicacion = publicacionService.getPublicacion(keyNormalizada,
 		    WebConstants.SessionConstants.ARTICULO);
 	    if (publicacion == null) {
-		publicacion = publicacionService.getPublicacion(key,
+		publicacion = publicacionService.getPublicacion(keyNormalizada,
 			WebConstants.SessionConstants.ACCESORIO);
 	    }
 	}
@@ -922,13 +922,15 @@ public class EditionController {
 	} else if (tipoedit.equals(WebConstants.SessionConstants.tipo3)) {
 	    tipo = WebConstants.SessionConstants.ACCESORIO;
 	}
-	String key = WebUtils.SHA1(url.replaceAll("-", " "));
-	Publicacion publicacion = publicacionService.getPublicacion(key, tipo);
+	String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
+		.toLowerCase());
+	Publicacion publicacion = publicacionService.getPublicacion(
+		keyNormalizada, tipo);
 	if (publicacion == null) {
 	    String uri = request.getRequestURI();
 	    throw new UnknownResourceException("No existe el recurso: " + uri);
 	}
-	session.setAttribute("publicacionKey", key);
+	session.setAttribute("publicacionKey", keyNormalizada);
 	session.setAttribute("publicacionTipo", tipo);
 
 	model.addAttribute("publicacion", publicacion);
@@ -961,8 +963,10 @@ public class EditionController {
 	    tipo = WebConstants.SessionConstants.ACCESORIO;
 	}
 
-	String key = WebUtils.SHA1(url.replaceAll("-", " "));
-	Publicacion publicacion = publicacionService.getPublicacion(key, tipo);
+	String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
+		.toLowerCase());
+	Publicacion publicacion = publicacionService.getPublicacion(
+		keyNormalizada, tipo);
 
 	model.addAttribute("pubNombresFotos", publicacion.getlImagesNames());
 	model.addAttribute("pubUrlsFotos", publicacion.getlImages());

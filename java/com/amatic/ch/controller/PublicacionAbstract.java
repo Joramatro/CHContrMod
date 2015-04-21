@@ -86,11 +86,12 @@ public abstract class PublicacionAbstract {
 	    // response.flushBuffer();
 	    throw new UnknownResourceException("invalid comment");
 	} else {
-	    String key = WebUtils.SHA1(url.replaceAll("-", " "));
-	    Publicacion publicacion = publicacionService.getPublicacion(key,
-		    WebConstants.SessionConstants.EBOOK);
+	    String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
+		    .toLowerCase());
+	    Publicacion publicacion = publicacionService.getPublicacion(
+		    keyNormalizada, WebConstants.SessionConstants.EBOOK);
 	    if (publicacion == null) {
-		publicacion = publicacionService.getPublicacion(key,
+		publicacion = publicacionService.getPublicacion(keyNormalizada,
 			WebConstants.SessionConstants.ARTICULO);
 	    }
 	    if (publicacion == null || Integer.parseInt(puntos) < 0
@@ -266,12 +267,13 @@ public abstract class PublicacionAbstract {
 
     String setPublicacion(String url, HttpServletRequest request, ModelMap model)
 	    throws NoSuchAlgorithmException, UnsupportedEncodingException {
-	String key = WebUtils.SHA1(url.replaceAll("-", " "));
+	String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
+		.toLowerCase());
 	String view = "ebook";
-	Publicacion publicacion = publicacionService.getPublicacion(key,
-		WebConstants.SessionConstants.EBOOK);
+	Publicacion publicacion = publicacionService.getPublicacion(
+		keyNormalizada, WebConstants.SessionConstants.EBOOK);
 	if (publicacion == null) {
-	    publicacion = publicacionService.getPublicacion(key,
+	    publicacion = publicacionService.getPublicacion(keyNormalizada,
 		    WebConstants.SessionConstants.ARTICULO);
 	    view = "articulo";
 	}
