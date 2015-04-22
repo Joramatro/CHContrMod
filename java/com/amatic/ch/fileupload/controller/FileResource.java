@@ -211,6 +211,91 @@ public class FileResource {
 
 		publicacion.setArticulo(articulo);
 	    }
+	    if (lImages.size() == 6) {
+		replaceimg = replaceimg.replace(
+			"alt=\"" + publicacion.getDescripcion() + "\"",
+			"alt=\"imagen 6 de detalle de "
+				+ publicacion.getTitulo() + "\"");
+		replaceimg = replaceimg.replace(
+			"id=\"_image6\" itemprop=\"image\" ",
+			"class=\"imageContextual\" ");
+		articulo = articulo.replaceAll("<img6>", replaceimg);
+
+		publicacion.setArticulo(articulo);
+	    }
+	    if (lImages.size() == 7) {
+		replaceimg = replaceimg.replace(
+			"alt=\"" + publicacion.getDescripcion() + "\"",
+			"alt=\"imagen 7 de detalle de "
+				+ publicacion.getTitulo() + "\"");
+		replaceimg = replaceimg.replace(
+			"id=\"_image6\" itemprop=\"image\" ",
+			"class=\"imageContextual\" ");
+		articulo = articulo.replaceAll("<img7>", replaceimg);
+
+		publicacion.setArticulo(articulo);
+	    }
+	    if (lImages.size() == 8) {
+		replaceimg = replaceimg.replace(
+			"alt=\"" + publicacion.getDescripcion() + "\"",
+			"alt=\"imagen 8 de detalle de "
+				+ publicacion.getTitulo() + "\"");
+		replaceimg = replaceimg.replace(
+			"id=\"_image6\" itemprop=\"image\" ",
+			"class=\"imageContextual\" ");
+		articulo = articulo.replaceAll("<img8>", replaceimg);
+
+		publicacion.setArticulo(articulo);
+	    }
+	    if (lImages.size() == 9) {
+		replaceimg = replaceimg.replace(
+			"alt=\"" + publicacion.getDescripcion() + "\"",
+			"alt=\"imagen 9 de detalle de "
+				+ publicacion.getTitulo() + "\"");
+		replaceimg = replaceimg.replace(
+			"id=\"_image6\" itemprop=\"image\" ",
+			"class=\"imageContextual\" ");
+		articulo = articulo.replaceAll("<img9>", replaceimg);
+
+		publicacion.setArticulo(articulo);
+	    }
+	    if (lImages.size() == 10) {
+		replaceimg = replaceimg.replace(
+			"alt=\"" + publicacion.getDescripcion() + "\"",
+			"alt=\"imagen 10 de detalle de "
+				+ publicacion.getTitulo() + "\"");
+		replaceimg = replaceimg.replace(
+			"id=\"_image6\" itemprop=\"image\" ",
+			"class=\"imageContextual\" ");
+		articulo = articulo.replaceAll("<img10>", replaceimg);
+
+		publicacion.setArticulo(articulo);
+	    }
+	    if (lImages.size() == 11) {
+		replaceimg = replaceimg.replace(
+			"alt=\"" + publicacion.getDescripcion() + "\"",
+			"alt=\"imagen 11 de detalle de "
+				+ publicacion.getTitulo() + "\"");
+		replaceimg = replaceimg.replace(
+			"id=\"_image6\" itemprop=\"image\" ",
+			"class=\"imageContextual\" ");
+		articulo = articulo.replaceAll("<img11>", replaceimg);
+
+		publicacion.setArticulo(articulo);
+	    }
+	    if (lImages.size() == 12) {
+		replaceimg = replaceimg.replace(
+			"alt=\"" + publicacion.getDescripcion() + "\"",
+			"alt=\"imagen 12 de detalle de "
+				+ publicacion.getTitulo() + "\"");
+		replaceimg = replaceimg.replace(
+			"id=\"_image6\" itemprop=\"image\" ",
+			"class=\"imageContextual\" ");
+		articulo = articulo.replaceAll("<img12>", replaceimg);
+
+		publicacion.setArticulo(articulo);
+	    }
+
 	    pdi.update(publicacion);
 	    int sizePreview = 80;
 	    String urlPreview = imagesService
