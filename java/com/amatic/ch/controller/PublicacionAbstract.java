@@ -60,11 +60,18 @@ public abstract class PublicacionAbstract {
     @Value("#{application['logo']}")
     String LOGO;
 
+    @Value("#{application['keyakis']}")
+    String KEYAKIS;
+
     void guardarComentarioPub(HttpServletRequest request, String url,
 	    String nombre, String email, String puntos, String comentario,
 	    String web, String nbrComment, HttpServletResponse response)
 	    throws Exception {
-	Akismet akismet = new Akismet("49f8a3bfb431", "http://www." + DOMAIN);
+	String keyakismet = "49f8a3bfb431";
+	if (KEYAKIS != null) {
+	    keyakismet = KEYAKIS;
+	}
+	Akismet akismet = new Akismet(keyakismet, "http://www." + DOMAIN);
 	boolean isSpam = akismet.commentCheck(request.getRemoteAddr(),
 		request.getHeader("User-agent"), request.getHeader("referer"),
 		"", // permalink
