@@ -1,10 +1,13 @@
 package com.amatic.ch.fileupload.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +24,6 @@ import javax.ws.rs.core.Response.Status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.amatic.ch.dao.impl.PublicacionDaoImpl;
 import com.amatic.ch.dto.Publicacion;
@@ -53,8 +55,8 @@ public class FileResource {
     // private PublicacionService publicacionService;
     PublicacionDaoImpl pdi = new PublicacionDaoImpl();
 
-    @Value("#{application['domain']}")
-    String DOMAIN;
+    // properties
+    String logo;
 
     /* step 1. get a unique url */
 
@@ -93,15 +95,39 @@ public class FileResource {
 
     /* step 3. redirected to the meta info */
 
+    @SuppressWarnings("null")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response post(@Context HttpServletRequest req,
-	    @Context HttpServletResponse res) throws IOException,
+	    @Context HttpServletResponse res,
+	    @Context ServletContext servletContext) throws IOException,
 	    URISyntaxException {
 	try {
 	    Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 	    BlobKey blobKey = blobs.get("files[]");
 	    // res.sendRedirect(blobKey.getKeyString() + "/meta");
+	    Properties properties = null;
+
+	    InputStream propertiesIS = servletContext
+		    .getResourceAsStream("/WEB-INF/application.properties");
+
+	    byte[] contents = new byte[1024];
+
+	    int bytesRead = 0;
+	    String strFileContents = "";
+	    while ((bytesRead = propertiesIS.read(contents)) != -1) {
+		strFileContents = new String(contents, 0, bytesRead);
+	    }
+	    String[] propertiesvalues = strFileContents.split("\\r\\n");
+	    int indexlogo = 0;
+	    for (int i = 0; i < propertiesvalues.length; i++) {
+		if (propertiesvalues[i].contains("logo")) {
+		    indexlogo = i;
+		    break;
+		}
+	    }
+	    String[] logoprop = propertiesvalues[indexlogo].split("=");
+	    logo = logoprop[1];
 
 	    BlobInfo info = blobInfoFactory.loadBlobInfo(blobKey);
 	    HttpSession session = req.getSession();
@@ -135,7 +161,16 @@ public class FileResource {
 	    // replaceimg += "<a target=\"_blank\" href=\"/venta/principal/"
 	    // + publicacion.getUrl() + "\">";
 	    // }
-	    replaceimg += "<img id=\"_image6\" itemprop=\"image\"  src=\""
+	    String lazysrc = "data-original";
+	    String lazyclass = "lazy";
+	    if (logo.startsWith("C")) {
+		lazysrc = "src";
+		lazyclass = "";
+	    }
+
+	    replaceimg += "<img id=\"_image6\" itemprop=\"image\"  "
+		    + lazysrc
+		    + "=\""
 		    + url
 		    + "\" alt=\""
 		    + publicacion.getDescripcion()
@@ -294,6 +329,11 @@ public class FileResource {
 		articulo = articulo.replaceAll("<img12>", replaceimg);
 
 		publicacion.setArticulo(articulo);
+	    }
+
+	    if (!lazyclass.equals("")) {
+		articulo = articulo.replaceAll("imageContextual",
+			"imageContextual " + lazyclass);
 	    }
 
 	    pdi.update(publicacion);
