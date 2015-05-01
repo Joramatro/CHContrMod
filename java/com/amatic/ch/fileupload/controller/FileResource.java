@@ -189,7 +189,7 @@ public class FileResource {
 	    if (lImages.size() == 1) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 1 de " + publicacion.getTitulo() + "\"");
+			"alt=\"1 de " + publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -200,7 +200,7 @@ public class FileResource {
 	    if (lImages.size() == 2) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"vista de " + publicacion.getTitulo() + "\"");
+			"alt=\"foto de ejemplo del artículo\"");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -211,8 +211,7 @@ public class FileResource {
 	    if (lImages.size() == 3) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 3 de interés de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"imagen de " + publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -222,8 +221,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 4) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 4 de de detalle\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -233,9 +231,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 5) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 5 en artículo de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -245,9 +241,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 6) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 6 del artículo "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -257,8 +251,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 7) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"img 7 en " + publicacion.getTitulo() + "\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -268,8 +261,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 8) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -279,8 +271,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 9) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -290,8 +281,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 10) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -301,8 +291,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 11) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -312,8 +301,7 @@ public class FileResource {
 	    }
 	    if (lImages.size() == 12) {
 		replaceimg = replaceimg.replace(
-			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"\"");
+			"alt=\"" + publicacion.getDescripcion() + "\"", "");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
