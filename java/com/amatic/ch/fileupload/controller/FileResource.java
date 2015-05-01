@@ -162,10 +162,10 @@ public class FileResource {
 	    // + publicacion.getUrl() + "\">";
 	    // }
 	    String lazysrc = "data-original";
-	    String lazyclass = "lazy";
+	    String lazyclass = "imageContextual lazy";
 	    if (logo.startsWith("C")) {
 		lazysrc = "src";
-		lazyclass = "";
+		lazyclass = "imageContextual";
 	    }
 
 	    replaceimg += "<img id=\"_image6\" itemprop=\"image\"  "
@@ -189,11 +189,10 @@ public class FileResource {
 	    if (lImages.size() == 1) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 1 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"imagen 1 de " + publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img1>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -201,11 +200,10 @@ public class FileResource {
 	    if (lImages.size() == 2) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 2 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"vista de " + publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img2>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -213,11 +211,11 @@ public class FileResource {
 	    if (lImages.size() == 3) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 3 de detalle de "
+			"alt=\"imagen 3 de interés de "
 				+ publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img3>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -225,11 +223,10 @@ public class FileResource {
 	    if (lImages.size() == 4) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 4 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"imagen 4 de de detalle\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img4>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -237,11 +234,11 @@ public class FileResource {
 	    if (lImages.size() == 5) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 5 de detalle de "
+			"alt=\"imagen 5 en artículo de "
 				+ publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img5>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -249,11 +246,11 @@ public class FileResource {
 	    if (lImages.size() == 6) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 6 de detalle de "
+			"alt=\"imagen 6 del artículo "
 				+ publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img6>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -261,11 +258,10 @@ public class FileResource {
 	    if (lImages.size() == 7) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 7 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"img 7 en " + publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img7>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -273,11 +269,10 @@ public class FileResource {
 	    if (lImages.size() == 8) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 8 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img8>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -285,11 +280,10 @@ public class FileResource {
 	    if (lImages.size() == 9) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 9 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img9>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -297,11 +291,10 @@ public class FileResource {
 	    if (lImages.size() == 10) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 10 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img10>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -309,11 +302,10 @@ public class FileResource {
 	    if (lImages.size() == 11) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 11 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img11>", replaceimg);
 
 		publicacion.setArticulo(articulo);
@@ -321,19 +313,13 @@ public class FileResource {
 	    if (lImages.size() == 12) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"imagen 12 de detalle de "
-				+ publicacion.getTitulo() + "\"");
+			"alt=\"\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"class=\"imageContextual\" ");
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
+				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img12>", replaceimg);
 
 		publicacion.setArticulo(articulo);
-	    }
-
-	    if (!lazyclass.equals("")) {
-		articulo = articulo.replaceAll("imageContextual",
-			"imageContextual " + lazyclass);
 	    }
 
 	    pdi.update(publicacion);
