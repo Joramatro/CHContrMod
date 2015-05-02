@@ -103,6 +103,7 @@ public class EditionController {
 	    @RequestParam(value = "script112", required = false) String script112,
 	    @RequestParam(value = "script121", required = false) String script121,
 	    @RequestParam(value = "script122", required = false) String script122,
+	    @RequestParam(value = "estrellas", required = false) String estrellas,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
 	    throws IOException, NoSuchAlgorithmException {
@@ -271,6 +272,7 @@ public class EditionController {
 	    publicacion.setScript112(script112);
 	    publicacion.setScript121(script121);
 	    publicacion.setScript122(script122);
+	    publicacion.setEstrellas(estrellas);
 
 	    publicacionService.crearPublicacion(publicacion);
 	} catch (Exception e) {
@@ -387,6 +389,7 @@ public class EditionController {
 	    @RequestParam(value = "script112", required = false) String script112,
 	    @RequestParam(value = "script121", required = false) String script121,
 	    @RequestParam(value = "script122", required = false) String script122,
+	    @RequestParam(value = "estrellas", required = false) String estrellas,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
 	    throws IOException, NoSuchAlgorithmException {
@@ -464,6 +467,7 @@ public class EditionController {
 	    publicacion.setScript112(script112);
 	    publicacion.setScript121(script121);
 	    publicacion.setScript122(script122);
+	    publicacion.setEstrellas(estrellas);
 
 	    publicacionService.update(publicacion);
 	} catch (Exception e) {
@@ -523,6 +527,7 @@ public class EditionController {
 	    @RequestParam(value = "script112", required = false) String script112,
 	    @RequestParam(value = "script121", required = false) String script121,
 	    @RequestParam(value = "script122", required = false) String script122,
+	    @RequestParam(value = "estrellas", required = false) String estrellas,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
 	    throws IOException, NoSuchAlgorithmException {
@@ -587,6 +592,7 @@ public class EditionController {
 	    publicacion.setScript112(script112);
 	    publicacion.setScript121(script121);
 	    publicacion.setScript122(script122);
+	    publicacion.setEstrellas(estrellas);
 
 	    // // reemplazo tercera imagen
 	    // List<String> lImagenes = publicacion.getlImages();

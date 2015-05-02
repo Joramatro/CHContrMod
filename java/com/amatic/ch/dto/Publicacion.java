@@ -147,6 +147,8 @@ public class Publicacion implements Serializable {
     String script121;
     @Index
     String script122;
+    @Index
+    String estrellas;
 
     public String getAutor() {
 	return autor;
@@ -696,6 +698,14 @@ public class Publicacion implements Serializable {
 
     public void setScript122(String script122) {
 	this.script122 = script122;
+    }
+
+    public String getEstrellas() {
+	return estrellas;
+    }
+
+    public void setEstrellas(String estrellas) {
+	this.estrellas = estrellas;
     }
 
 }
