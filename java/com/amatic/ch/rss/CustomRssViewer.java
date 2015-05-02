@@ -1,6 +1,7 @@
 package com.amatic.ch.rss;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import com.amatic.ch.dto.SampleContent;
 import com.sun.syndication.feed.rss.Channel;
 import com.sun.syndication.feed.rss.Content;
 import com.sun.syndication.feed.rss.Description;
+import com.sun.syndication.feed.rss.Guid;
 import com.sun.syndication.feed.rss.Item;
 
 public class CustomRssViewer extends AbstractRssFeedView {
@@ -34,7 +36,11 @@ public class CustomRssViewer extends AbstractRssFeedView {
 	feed.setTitle(BRAND);
 	feed.setDescription(DESCRIPTION);
 	feed.setLink("http://www." + DOMAIN);
-
+	feed.setLanguage("es");
+	feed.setCopyright("Copyright "
+		+ Calendar.getInstance().get(Calendar.YEAR) + " " + BRAND);
+	feed.setFeedType("rss_2.0");
+	feed.setEncoding("UTF-8");
 	super.buildFeedMetadata(model, feed, request);
     }
 
@@ -51,7 +57,6 @@ public class CustomRssViewer extends AbstractRssFeedView {
 	for (SampleContent tempContent : listContent) {
 
 	    Item item = new Item();
-
 	    Content content = new Content();
 	    content.setValue(tempContent.getSummary());
 	    item.setContent(content);
@@ -65,7 +70,10 @@ public class CustomRssViewer extends AbstractRssFeedView {
 	    desc.setValue(tempContent.getDescription());
 	    item.setDescription(desc);
 	    item.setPubDate(tempContent.getCreatedDate());
-
+	    Guid guid = new Guid();
+	    guid.setPermaLink(false);
+	    guid.setValue(tempContent.getGuid());
+	    item.setGuid(guid);
 	    items.add(item);
 	}
 

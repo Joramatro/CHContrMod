@@ -16,6 +16,7 @@ public class SampleContent {
     List<Category> categories = new ArrayList<Category>();
     String description;
     Date createdDate;
+    String guid;
 
     public String getTitle() {
 	return title;
@@ -79,6 +80,14 @@ public class SampleContent {
 
     public void setCategories(List<Category> categories) {
 	this.categories = categories;
+    }
+
+    public String getGuid() {
+	return guid;
+    }
+
+    public void setGuid(String guid) {
+	this.guid = guid;
     }
 
 }

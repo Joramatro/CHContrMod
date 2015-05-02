@@ -1,13 +1,15 @@
 package com.amatic.ch.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import com.amatic.ch.constants.WebConstants;
 import com.amatic.ch.dto.Publicacion;
 import com.amatic.ch.dto.SampleContent;
 import com.amatic.ch.service.PublicacionService;
+import com.amatic.ch.utils.WebUtils;
 import com.sun.syndication.feed.rss.Category;
 
 @Controller
@@ -40,7 +43,9 @@ public class RssSitemapController {
 	List<SampleContent> items = new ArrayList<SampleContent>();
 
 	List<Publicacion> publicacionesEbooks = null;
-	if (logo.startsWith("C")) {
+	// recordar que las nuevas webs usan ebooks pero no son artículos de ahí
+	// este if
+	if (logo.startsWith("C") && !logo.equals("CSMG")) {
 	    publicacionesEbooks = publicacionService
 		    .getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
 
@@ -48,10 +53,17 @@ public class RssSitemapController {
 		SampleContent content = new SampleContent();
 		content.setTitle(publicacionEbook.getTitulo());
 		content.setAuthor(publicacionEbook.getAutor());
-		content.setUrl("http://www." + DOMAIN + "/"
+		String subfolder = "";
+		if (logo.equals("CCE")) {
+		    subfolder = "cafeteras/";
+		} else if (logo.equals("CEH")) {
+		    subfolder = "ebooks/";
+		} else if (logo.equals("CMH")) {
+		    subfolder = "microondas/";
+		}
+		content.setUrl("http://www." + DOMAIN + "/" + subfolder
 			+ publicacionEbook.getUrl());
-		content.setSummary(Jsoup.parse(publicacionEbook.getArticulo())
-			.text());
+		content.setSummary(publicacionEbook.getResumen());
 		Category category = new Category();
 		category.setValue(publicacionEbook.getClase1());
 		content.getCategories().add(category);
@@ -62,9 +74,15 @@ public class RssSitemapController {
 		    content.getCategories().add(category2);
 		}
 		content.setDescription(publicacionEbook.getDescripcion());
-		content.setComments("http://www." + DOMAIN + "/"
+		content.setComments("http://www." + DOMAIN + "/" + subfolder
 			+ publicacionEbook.getUrl() + "/#comments");
 		content.setCreatedDate(publicacionEbook.getFechaCreacion());
+		try {
+		    content.setGuid(WebUtils.SHA1(String
+			    .valueOf(publicacionEbook.getId())));
+		} catch (NoSuchAlgorithmException e) {
+		    content.setGuid(publicacionEbook.getUrl());
+		}
 		items.add(content);
 	    }
 	}
@@ -75,10 +93,15 @@ public class RssSitemapController {
 	    SampleContent content = new SampleContent();
 	    content.setTitle(publicacionArticulo.getTitulo());
 	    content.setAuthor(publicacionArticulo.getAutor());
-	    content.setUrl("http://www." + DOMAIN + "/"
-		    + publicacionArticulo.getUrl());
-	    content.setSummary(Jsoup.parse(publicacionArticulo.getArticulo())
-		    .text());
+	    if (logo.startsWith("C") && !logo.equals("CMovsH")) {
+		content.setUrl("http://www." + DOMAIN + "/blog/"
+			+ publicacionArticulo.getUrl());
+	    } else {
+		content.setUrl("http://www." + DOMAIN + "/"
+			+ publicacionArticulo.getUrl());
+	    }
+
+	    content.setSummary(publicacionArticulo.getResumen());
 	    Category category = new Category();
 	    category.setValue(publicacionArticulo.getClase1());
 	    content.getCategories().add(category);
@@ -89,11 +112,30 @@ public class RssSitemapController {
 		content.getCategories().add(category2);
 	    }
 	    content.setDescription(publicacionArticulo.getDescripcion());
-	    content.setComments("http://www." + DOMAIN + "/"
-		    + publicacionArticulo.getUrl() + "/#comments");
+	    if (logo.startsWith("C") && !logo.equals("CMovsH")) {
+		content.setComments("http://www." + DOMAIN + "/blog/"
+			+ publicacionArticulo.getUrl() + "/#comments");
+	    } else {
+		content.setComments("http://www." + DOMAIN + "/"
+			+ publicacionArticulo.getUrl() + "/#comments");
+	    }
+
 	    content.setCreatedDate(publicacionArticulo.getFechaCreacion());
+	    try {
+		content.setGuid(WebUtils.SHA1(String
+			.valueOf(publicacionArticulo.getId())));
+	    } catch (NoSuchAlgorithmException e) {
+		content.setGuid(publicacionArticulo.getUrl());
+	    }
 	    items.add(content);
 	}
+
+	Collections.sort(items, new Comparator<SampleContent>() {
+	    @Override
+	    public int compare(SampleContent o1, SampleContent o2) {
+		return o2.getCreatedDate().compareTo(o1.getCreatedDate());
+	    }
+	});
 
 	ModelAndView mav = new ModelAndView();
 	mav.setViewName("rssViewer");
@@ -110,7 +152,7 @@ public class RssSitemapController {
 		.getPublicaciones(WebConstants.SessionConstants.ARTICULO);
 
 	List<Publicacion> publicacionesEbooks = null;
-	if (logo.startsWith("C")) {
+	if (logo.startsWith("C") && !logo.equals("CSMG")) {
 	    publicacionesEbooks = publicacionService
 		    .getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
 
