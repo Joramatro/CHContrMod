@@ -180,7 +180,8 @@ public class FileResource {
 	    // }
 	    String lazysrc = "data-original";
 	    String lazyclass = "imageContextual lazy";
-	    if (logo.startsWith("C")) {
+	    if (logo.startsWith("C") && !logo.equals("CCE")
+		    && !logo.equals("CEH")) {
 		lazysrc = "src";
 		lazyclass = "imageContextual";
 	    }
