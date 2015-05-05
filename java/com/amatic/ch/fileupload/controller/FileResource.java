@@ -57,6 +57,8 @@ public class FileResource {
 
     // properties
     String logo;
+    String photoheight;
+    String photowidth;
 
     /* step 1. get a unique url */
 
@@ -120,14 +122,29 @@ public class FileResource {
 	    }
 	    String[] propertiesvalues = strFileContents.split("\\r\\n");
 	    int indexlogo = 0;
+	    int indexphotoheight = 0;
+	    int indexphotowidth = 0;
 	    for (int i = 0; i < propertiesvalues.length; i++) {
 		if (propertiesvalues[i].contains("logo")) {
 		    indexlogo = i;
-		    break;
+		}
+		if (propertiesvalues[i].contains("photoheight")) {
+		    indexphotoheight = i;
+		}
+		if (propertiesvalues[i].contains("photowidth")) {
+		    indexphotowidth = i;
 		}
 	    }
 	    String[] logoprop = propertiesvalues[indexlogo].split("=");
 	    logo = logoprop[1];
+
+	    String[] photoheightprop = propertiesvalues[indexphotoheight]
+		    .split("=");
+	    photoheight = photoheightprop[1];
+
+	    String[] photowidthprop = propertiesvalues[indexphotowidth]
+		    .split("=");
+	    photowidth = photowidthprop[1];
 
 	    BlobInfo info = blobInfoFactory.loadBlobInfo(blobKey);
 	    HttpSession session = req.getSession();
@@ -168,13 +185,10 @@ public class FileResource {
 		lazyclass = "imageContextual";
 	    }
 
-	    replaceimg += "<img id=\"_image6\" itemprop=\"image\"  "
-		    + lazysrc
-		    + "=\""
-		    + url
-		    + "\" alt=\""
-		    + publicacion.getDescripcion()
-		    + "\" style=\"width:510px; height:375px; margin-left: 22%;\"/>";
+	    replaceimg += "<img id=\"_image6\" itemprop=\"image\"  " + lazysrc
+		    + "=\"" + url + "\" alt=\"" + publicacion.getDescripcion()
+		    + "\" style=\"width:" + photowidth + "px; height:"
+		    + photoheight + "px; margin-left: 22%;\"/>";
 	    // if (!publicacion.getScript().equals("#") && lImages.size() == 3)
 	    // {
 	    // replaceimg += "</a>";

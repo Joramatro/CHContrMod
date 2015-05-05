@@ -37,6 +37,12 @@ public class RssSitemapController {
     @Value("#{application['logo']}")
     String logo;
 
+    @Value("#{application['photoheight']}")
+    String photoheight;
+
+    @Value("#{application['photowidth']}")
+    String photowidth;
+
     @RequestMapping(value = "/rssfeed", method = RequestMethod.GET)
     public ModelAndView getFeedInRss() throws UnsupportedEncodingException {
 
@@ -63,7 +69,17 @@ public class RssSitemapController {
 		}
 		content.setUrl("http://www." + DOMAIN + "/" + subfolder
 			+ publicacionEbook.getUrl());
-		content.setSummary(publicacionEbook.getResumen());
+
+		String img0 = "";
+		if (publicacionEbook.getlImages() != null
+			&& publicacionEbook.getlImages().size() > 0) {
+		    img0 = "<img src=\"" + publicacionEbook.getlImages().get(0)
+			    + "\" width=\"" + photowidth + "\" height=\""
+			    + photoheight
+			    + "\" alt=\"Foto principal\"/><br/><br/>";
+		}
+
+		content.setSummary(img0 + publicacionEbook.getResumen());
 		Category category = new Category();
 		category.setValue(publicacionEbook.getClase1());
 		content.getCategories().add(category);
@@ -101,7 +117,15 @@ public class RssSitemapController {
 			+ publicacionArticulo.getUrl());
 	    }
 
-	    content.setSummary(publicacionArticulo.getResumen());
+	    String img0 = "";
+	    if (publicacionArticulo.getlImages() != null
+		    && publicacionArticulo.getlImages().size() > 0) {
+		img0 = "<img src=\"" + publicacionArticulo.getlImages().get(0)
+			+ "\" width=\"" + photowidth + "\" height=\""
+			+ photoheight + "\" alt=\"Foto principal\"/><br/><br/>";
+	    }
+
+	    content.setSummary(img0 + publicacionArticulo.getResumen());
 	    Category category = new Category();
 	    category.setValue(publicacionArticulo.getClase1());
 	    content.getCategories().add(category);
