@@ -53,7 +53,6 @@
 	<classpathentry kind="lib" path="lib/spring-web-3.2.0.M2.jar"/>
 	<classpathentry kind="lib" path="lib/spring-webmvc-3.2.0.M2.jar"/>
 	<classpathentry kind="lib" path="lib/stax-api-1.0-2.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Copy of Comprarebookhoy"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Copy of Comprarmicrohoy"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Copy of Comprarcafeterahoy"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
