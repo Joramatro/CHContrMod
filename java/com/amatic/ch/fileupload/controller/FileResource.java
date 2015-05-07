@@ -204,7 +204,7 @@ public class FileResource {
 	    if (lImages.size() == 1) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"1 de " + publicacion.getTitulo() + "\"");
+			"alt=\"primera foto del texto\"");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
@@ -215,7 +215,7 @@ public class FileResource {
 	    if (lImages.size() == 2) {
 		replaceimg = replaceimg.replace(
 			"alt=\"" + publicacion.getDescripcion() + "\"",
-			"alt=\"foto de ejemplo del artículo\"");
+			"alt=\"foto de detalle del artículo\"");
 		replaceimg = replaceimg.replace(
 			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
