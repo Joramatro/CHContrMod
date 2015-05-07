@@ -206,8 +206,7 @@ public class FileResource {
 			"alt=\"" + publicacion.getDescripcion() + "\"",
 			"alt=\"1 de " + publicacion.getTitulo() + "\"");
 		replaceimg = replaceimg.replace(
-			"id=\"_image6\" itemprop=\"image\" ",
-			"id=\"_image6\" itemprop=\"image\" class=\""
+			"id=\"_image6\" itemprop=\"image\" ", "class=\""
 				+ lazyclass + "\" ");
 		articulo = articulo.replaceAll("<img1>", replaceimg);
 
