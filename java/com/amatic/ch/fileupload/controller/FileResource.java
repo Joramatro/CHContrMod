@@ -180,11 +180,10 @@ public class FileResource {
 	    // }
 	    String lazysrc = "data-original";
 	    String lazyclass = "imageContextual lazy";
-	    if (logo.startsWith("C") && !logo.equals("CCE")
-		    && !logo.equals("CEH")) {
-		lazysrc = "src";
-		lazyclass = "imageContextual";
-	    }
+	    // if (logo.equals("CMovsH")) {
+	    // lazysrc = "src";
+	    // lazyclass = "imageContextual";
+	    // }
 
 	    replaceimg += "<img id=\"_image6\" itemprop=\"image\"  " + lazysrc
 		    + "=\"" + url + "\" alt=\"" + publicacion.getDescripcion()
