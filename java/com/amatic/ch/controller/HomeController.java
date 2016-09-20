@@ -1,16 +1,13 @@
 package com.amatic.ch.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import javax.cache.CacheException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +16,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.amatic.ch.constants.WebConstants;
-import com.amatic.ch.dto.Comentario;
-import com.amatic.ch.dto.Publicacion;
 import com.amatic.ch.exception.UnknownResourceException;
 import com.amatic.ch.service.ComentarioService;
 import com.amatic.ch.service.PublicacionService;
@@ -40,8 +34,7 @@ public class HomeController {
     @RequestMapping(value = { "/index", "/" }, method = { RequestMethod.GET,
 	    RequestMethod.POST })
     public String getMainScreen(ModelMap model, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-
+	    HttpServletResponse response) throws IOException, CacheException {
 	HttpSession session = request.getSession();
 	response.setDateHeader("Expires", (new Date()).getTime() + 604800000L);
 	// User user = (User) session
@@ -65,43 +58,44 @@ public class HomeController {
 	// user.setNewUser(true);
 	// Fin Uservalidation trick
 
-	List<Publicacion> publicacionesEbooks = publicacionService
-		.getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
-
-	List<Publicacion> publicacionesBlog = publicacionService
-		.getUltimasPublicaciones(WebConstants.SessionConstants.ARTICULO);
-
-	List<Publicacion> publicacionesMVE = publicacionService
-		.getPublicacionesMasVistas(WebConstants.SessionConstants.EBOOK);
-
-	List<Publicacion> publicacionesMVA = publicacionService
-		.getPublicacionesMasVistas(WebConstants.SessionConstants.ARTICULO);
-
-	List<Publicacion> publicacionesDestacadas = publicacionService
-		.getPublicacionesDestacadas();
-
-	List<Publicacion> publicacionesPortada = publicacionService
-		.getPublicacionesPortada();
-
-	List<Comentario> comentarios = comentarioService
-		.getUltimosComentarios();
-	List<Comentario> ultimosComentarios = new ArrayList<Comentario>();
-	for (Comentario comentario : comentarios) {
-	    Comentario ultimoComentario = new Comentario();
-	    ultimoComentario.setComentario(Jsoup.clean(comentario
-		    .getComentario().replaceAll("<br />", " "), Whitelist
-		    .simpleText()));
-	    ultimoComentario.setNombre(comentario.getNombre());
-	    ultimoComentario.setPublicacion(comentario.getPublicacion());
-	    ultimosComentarios.add(ultimoComentario);
-	}
-	model.addAttribute("comentarios", ultimosComentarios);
-	model.addAttribute("publicacionesMVE", publicacionesMVE);
-	model.addAttribute("publicacionesMVA", publicacionesMVA);
-	model.addAttribute("publicacionesEbooks", publicacionesEbooks);
-	model.addAttribute("publicacionesBlog", publicacionesBlog);
-	model.addAttribute("publicacionesDestacadas", publicacionesDestacadas);
-	model.addAttribute("publicacionesPortada", publicacionesPortada);
+	// List<Publicacion> publicacionesEbooks = publicacionService
+	// .getUltimasPublicaciones(WebConstants.SessionConstants.EBOOK);
+	//
+	// List<Publicacion> publicacionesBlog = publicacionService
+	// .getUltimasPublicaciones(WebConstants.SessionConstants.ARTICULO);
+	//
+	// List<Publicacion> publicacionesMVE = publicacionService
+	// .getPublicacionesMasVistas(WebConstants.SessionConstants.EBOOK);
+	//
+	// List<Publicacion> publicacionesMVA = publicacionService
+	// .getPublicacionesMasVistas(WebConstants.SessionConstants.ARTICULO);
+	//
+	// List<Publicacion> publicacionesDestacadas = publicacionService
+	// .getPublicacionesDestacadas();
+	//
+	// List<Publicacion> publicacionesPortada = publicacionService
+	// .getPublicacionesPortada();
+	//
+	// List<Comentario> comentarios = comentarioService
+	// .getUltimosComentarios();
+	// List<Comentario> ultimosComentarios = new ArrayList<Comentario>();
+	// for (Comentario comentario : comentarios) {
+	// Comentario ultimoComentario = new Comentario();
+	// ultimoComentario.setComentario(Jsoup.clean(comentario
+	// .getComentario().replaceAll("<br />", " "), Whitelist
+	// .simpleText()));
+	// ultimoComentario.setNombre(comentario.getNombre());
+	// ultimoComentario.setPublicacion(comentario.getPublicacion());
+	// ultimosComentarios.add(ultimoComentario);
+	// }
+	// model.addAttribute("comentarios", ultimosComentarios);
+	// model.addAttribute("publicacionesMVE", publicacionesMVE);
+	// model.addAttribute("publicacionesMVA", publicacionesMVA);
+	// model.addAttribute("publicacionesEbooks", publicacionesEbooks);
+	// model.addAttribute("publicacionesBlog", publicacionesBlog);
+	// model.addAttribute("publicacionesDestacadas",
+	// publicacionesDestacadas);
+	// model.addAttribute("publicacionesPortada", publicacionesPortada);
 
 	return "index";
     }

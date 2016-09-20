@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.cache.CacheException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,7 +45,8 @@ public class RssSitemapController {
     String photowidth;
 
     @RequestMapping(value = "/rssfeed", method = RequestMethod.GET)
-    public ModelAndView getFeedInRss() throws UnsupportedEncodingException {
+    public ModelAndView getFeedInRss() throws UnsupportedEncodingException,
+	    CacheException {
 
 	List<SampleContent> items = new ArrayList<SampleContent>();
 
@@ -171,7 +173,7 @@ public class RssSitemapController {
 
     @RequestMapping(value = "/sitemap.xml", method = RequestMethod.GET)
     public String getMainScreen(ModelMap model, HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletResponse response) throws CacheException {
 	List<Publicacion> publicacionesBlog = publicacionService
 		.getPublicaciones(WebConstants.SessionConstants.ARTICULO);
 

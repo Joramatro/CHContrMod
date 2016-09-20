@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.cache.CacheException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -302,7 +303,7 @@ public class EditionController {
     public String editarPublicacion(ModelMap model,
 	    @PathVariable("url") String url, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException,
-	    NoSuchAlgorithmException {
+	    NoSuchAlgorithmException, CacheException {
 	HttpSession session = request.getSession();
 	User user = (User) session
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
@@ -392,7 +393,7 @@ public class EditionController {
 	    @RequestParam(value = "estrellas", required = false) String estrellas,
 	    @RequestParam("disponible") String disponible,
 	    HttpServletRequest request, HttpServletResponse response)
-	    throws IOException, NoSuchAlgorithmException {
+	    throws IOException, NoSuchAlgorithmException, CacheException {
 	HttpSession session = request.getSession();
 	User user = (User) session
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
@@ -646,7 +647,7 @@ public class EditionController {
 	    RequestMethod.GET, RequestMethod.POST })
     public void getLogEditar(ModelMap model, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException,
-	    NoSuchAlgorithmException {
+	    NoSuchAlgorithmException, CacheException {
 	HttpSession session = request.getSession();
 
 	Publicacion publicacion = publicacionService.getPublicacion(
@@ -660,7 +661,7 @@ public class EditionController {
     @RequestMapping(value = { "/edicion/actualizarComentarios" }, method = {
 	    RequestMethod.GET, RequestMethod.POST })
     public void getActualizar(ModelMap model, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
+	    HttpServletResponse response) throws IOException, CacheException {
 	List<Publicacion> publicaciones = publicacionService
 		.getPublicaciones(WebConstants.SessionConstants.EBOOK);
 
@@ -715,7 +716,7 @@ public class EditionController {
 	    RequestMethod.GET, RequestMethod.POST })
     public void getActualizarPublicaciones(ModelMap model,
 	    HttpServletRequest request, HttpServletResponse response)
-	    throws IOException, NoSuchAlgorithmException {
+	    throws IOException, NoSuchAlgorithmException, CacheException {
 
 	List<Publicacion> publicaciones = publicacionService
 		.getPublicaciones(WebConstants.SessionConstants.EBOOK);
@@ -843,7 +844,7 @@ public class EditionController {
 
     @RequestMapping(value = { "/edicion/pubUrlTitulo" }, method = { RequestMethod.GET })
     public String getPubUrlTitulo(ModelMap model, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
+	    HttpServletResponse response) throws IOException, CacheException {
 	List<Publicacion> publicacionesEbook = publicacionService
 		.getPublicaciones(WebConstants.SessionConstants.EBOOK);
 
@@ -866,7 +867,7 @@ public class EditionController {
     public String verNombreFotos(ModelMap model,
 	    @PathVariable("url") String url, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException,
-	    NoSuchAlgorithmException {
+	    NoSuchAlgorithmException, CacheException {
 	HttpSession session = request.getSession();
 	User user = (User) session
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
@@ -909,7 +910,7 @@ public class EditionController {
 	    @PathVariable("url") String url,
 	    @PathVariable("tipoedit") String tipoedit,
 	    HttpServletRequest request, HttpServletResponse response)
-	    throws IOException, NoSuchAlgorithmException {
+	    throws IOException, NoSuchAlgorithmException, CacheException {
 	HttpSession session = request.getSession();
 	User user = (User) session
 		.getAttribute(WebConstants.SessionConstants.RC_USER);
@@ -950,7 +951,7 @@ public class EditionController {
 	    @PathVariable("url") String url,
 	    @PathVariable("tipoedit") String tipoedit,
 	    HttpServletRequest request, HttpServletResponse response)
-	    throws IOException, NoSuchAlgorithmException {
+	    throws IOException, NoSuchAlgorithmException, CacheException {
 	HttpSession session = request.getSession();
 	User user = (User) session
 		.getAttribute(WebConstants.SessionConstants.RC_USER);

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.cache.CacheException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +66,8 @@ public class FileResource {
     @DELETE
     @Path("/{key}")
     public Response delete(@PathParam("key") String key,
-	    @Context HttpServletRequest req, @Context HttpServletResponse res) {
+	    @Context HttpServletRequest req, @Context HttpServletResponse res)
+	    throws CacheException {
 	Status status;
 	try {
 	    blobstoreService.delete(new BlobKey(key));

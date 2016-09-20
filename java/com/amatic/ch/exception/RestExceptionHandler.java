@@ -3,7 +3,6 @@ package com.amatic.ch.exception;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -204,12 +203,12 @@ public class RestExceptionHandler extends AbstractHandlerExceptionResolver
 
 	ServletWebRequest webRequest = new ServletWebRequest(request, response);
 
-	RestErrorResolver resolver = getErrorResolver();
+	// RestErrorResolver resolver = getErrorResolver();
 
-	RestError error = resolver.resolveError(webRequest, handler, ex);
-	if (error == null) {
-	    return null;
-	}
+	// RestError error = resolver.resolveError(webRequest, handler, ex);
+	// if (error == null) {
+	// return null;
+	// }
 
 	// ModelAndView mav = null;
 
@@ -219,18 +218,18 @@ public class RestExceptionHandler extends AbstractHandlerExceptionResolver
 	// log.error("Acquiring ModelAndView for Exception [" + ex
 	// + "] resulted in an exception.", invocationEx);
 	// }
-	LinkedHashMap lhmBody = null;
-	try {
-	    Object body = getModelAndView(webRequest, handler, error);
-	    lhmBody = (LinkedHashMap) body;
-	} catch (Exception e) {
-	    // TODO Auto-generated catch block
-	    log.error("error getting body resterror", e);
-	}
+	// LinkedHashMap lhmBody = null;
+	// try {
+	// Object body = getModelAndView(webRequest, handler, error);
+	// lhmBody = (LinkedHashMap) body;
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// log.error("error getting body resterror", e);
+	// }
 
 	ModelAndView mav = new ModelAndView("error/error_dinamic");
-	mav.addObject("message", lhmBody);
-	mav.addObject("code", lhmBody.get("code"));
+	// mav.addObject("message", lhmBody);
+	// mav.addObject("code", lhmBody.get("code"));
 
 	return mav;
     }

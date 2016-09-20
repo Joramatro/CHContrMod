@@ -2,8 +2,11 @@ package com.amatic.ch.dao.impl;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.cache.CacheException;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +14,18 @@ import com.amatic.ch.dao.PublicacionDao;
 import com.amatic.ch.dto.Contacto;
 import com.amatic.ch.dto.Email;
 import com.amatic.ch.dto.Publicacion;
+import com.google.appengine.api.memcache.MemcacheService;
 
 @Repository
 public class PublicacionDaoImpl implements PublicacionDao {
+
+    static MemcacheService syncCache = null;
+
+    public static void getCache() throws CacheException {
+	// syncCache = MemcacheServiceFactory.getMemcacheService();
+	// syncCache.setErrorHandler(ErrorHandlers
+	// .getConsistentLogAndContinue(Level.INFO));
+    }
 
     @Override
     public void crearPublicacion(Publicacion publicacion) {
@@ -22,63 +34,146 @@ public class PublicacionDaoImpl implements PublicacionDao {
     }
 
     @Override
-    public Publicacion getPublicacion(String key, String tipo) {
-
-	Publicacion publicacion = ofy().load().type(Publicacion.class)
-		.filter("key", key).filter("tipo", tipo).first().get();
-
+    public Publicacion getPublicacion(String key, String tipo)
+	    throws CacheException {
+	Publicacion publicacion;
+	// if (syncCache == null) {
+	// getCache();
+	// }
+	if (false) {
+	    publicacion = (Publicacion) syncCache.get(key + tipo);
+	} else {
+	    publicacion = ofy().load().type(Publicacion.class)
+		    .filter("key", key).filter("tipo", tipo).first().get();
+	    // syncCache.put(key + tipo, publicacion);
+	}
 	return publicacion;
     }
 
     @Override
-    public List<Publicacion> getUltimasPublicaciones(String tipo) {
+    public List<Publicacion> getUltimasPublicaciones(String tipo)
+	    throws CacheException {
+	// if (syncCache == null) {
+	// getCache();
+	// }
+	List<Publicacion> ultimasPublicaciones;
+	// syncCache.put("ultimasPublicaciones", null);
+	if (false) {
+	    ultimasPublicaciones = (List<Publicacion>) syncCache
+		    .get("ultimasPubs");
 
-	List<Publicacion> ultimasPublicaciones = ofy().load()
-		.type(Publicacion.class).filter("tipo", tipo)
-		.order("-fechaCreacion").list();
+	} else {
+	    ultimasPublicaciones = ofy().load().type(Publicacion.class)
+		    .filter("tipo", tipo).order("-fechaCreacion").list();
 
-	if (ultimasPublicaciones.size() > 15) {
-	    ultimasPublicaciones = ultimasPublicaciones.subList(0, 15);
+	    if (ultimasPublicaciones.size() > 15) {
+		ultimasPublicaciones = ultimasPublicaciones.subList(0, 15);
+	    }
+	    // syncCache.put("ultimasPublicaciones", ultimasPublicaciones);
+	    // syncCache.put("ultimasPubs", ultimasPublicaciones.size());
 	}
-
 	return ultimasPublicaciones;
     }
 
     @Override
-    public List<Publicacion> getPublicacionesDestacadas() {
+    public List<Publicacion> getPublicacionesDestacadas() throws CacheException {
+	List<Publicacion> publicacionesDestacadas;
+	String tipo = "destacadas";
+	// if (syncCache == null) {
+	// getCache();
+	// }
+	// syncCache.put("publicacionesDestacadas", null);
+	if (false) {
+	    publicacionesDestacadas = new ArrayList<Publicacion>();
+	    publicacionesDestacadas = (List<Publicacion>) syncCache
+		    .get("publicacionesDestacadas");
+	} else {
 
-	List<Publicacion> publicacionesDestacadas = ofy().load()
-		.type(Publicacion.class).filter("destacado", "S")
-		.order("-fechaCreacion").list();
+	    publicacionesDestacadas = ofy().load().type(Publicacion.class)
+		    .filter("destacado", "S").order("-fechaCreacion").list();
 
+	    // syncCache.put("publicacionesDestacadas",
+	    // publicacionesDestacadas);
+
+	}
 	return publicacionesDestacadas;
     }
 
     @Override
-    public List<Publicacion> getPublicacionesPortada() {
+    public List<Publicacion> getPublicacionesPortada() throws CacheException {
 
-	List<Publicacion> publicacionesPortada = ofy().load()
-		.type(Publicacion.class).filter("portada", "S")
-		.order("-fechaCreacion").list();
+	List<Publicacion> publicacionesPortada;
+	// String tipo = "portada";
+	// if (syncCache == null) {
+	// getCache();
+	// }
+	// syncCache.put("publicacionesPortada", null);
+	if (false) {
+	    publicacionesPortada = (List<Publicacion>) syncCache
+		    .get("portadaPubs");
+	} else {
 
+	    publicacionesPortada = ofy().load().type(Publicacion.class)
+		    .filter("portada", "S").order("-fechaCreacion").list();
+
+	    // syncCache.put("publicacionesPortada", publicacionesPortada);
+
+	    // syncCache.put("portadaPubs", publicacionesPortada.size());
+
+	}
 	return publicacionesPortada;
+
     }
 
     @Override
-    public List<Publicacion> getPublicaciones(String tipo) {
+    public List<Publicacion> getPublicaciones(String tipo)
+	    throws CacheException {
 
-	List<Publicacion> publicaciones = ofy().load().type(Publicacion.class)
-		.filter("tipo", tipo).order("-fechaCreacion").list();
+	List<Publicacion> publicaciones;
+	// String tipo2 = "pubs";
+	// if (syncCache == null) {
+	// getCache();
+	// }
+	// syncCache.put("publicacionesPubs", null);
+	if (false) {
+	    publicaciones = (List<Publicacion>) syncCache
+		    .get("publicacionesPubs");
+	} else {
 
+	    publicaciones = ofy().load().type(Publicacion.class)
+		    .filter("tipo", tipo).order("-fechaCreacion").list();
+
+	    // syncCache.put("publicacionesPubs", publicaciones);
+
+	    // syncCache.put("pubsPubs", publicaciones.size());
+
+	}
 	return publicaciones;
     }
 
     @Override
-    public List<Publicacion> getPublicacionesMasVistas(String tipo) {
+    public List<Publicacion> getPublicacionesMasVistas(String tipo)
+	    throws CacheException {
 
-	List<Publicacion> publicaciones = ofy().load().type(Publicacion.class)
-		.filter("tipo", tipo).order("-numVisitas").list();
+	List<Publicacion> publicaciones;
+	// String tipo2 = "masvistas";
+	// if (syncCache == null) {
+	// getCache();
+	// }
+	// syncCache.put("masvistasPublicaciones", null);
+	if (false) {
+	    publicaciones = (List<Publicacion>) syncCache.get("masvistasPubs");
 
+	} else {
+
+	    publicaciones = ofy().load().type(Publicacion.class)
+		    .filter("tipo", tipo).order("-numVisitas").list();
+
+	    // syncCache.put("masvistasPublicaciones", publicaciones);
+
+	    // syncCache.put("masvistasPubs", publicaciones.size());
+
+	}
 	return publicaciones;
     }
 

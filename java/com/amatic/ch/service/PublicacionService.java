@@ -2,6 +2,8 @@ package com.amatic.ch.service;
 
 import java.util.List;
 
+import javax.cache.CacheException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +22,18 @@ public class PublicacionService {
 	this.PublicacionDao.crearPublicacion(publicacion);
     }
 
-    public Publicacion getPublicacion(String key, String tipo) {
+    public Publicacion getPublicacion(String key, String tipo)
+	    throws CacheException {
 	return this.PublicacionDao.getPublicacion(key, tipo);
     }
 
-    public List<Publicacion> getUltimasPublicaciones(String tipo) {
+    public List<Publicacion> getUltimasPublicaciones(String tipo)
+	    throws CacheException {
 	return this.PublicacionDao.getUltimasPublicaciones(tipo);
     }
 
-    public List<Publicacion> getPublicaciones(String tipo) {
+    public List<Publicacion> getPublicaciones(String tipo)
+	    throws CacheException {
 	return this.PublicacionDao.getPublicaciones(tipo);
     }
 
@@ -44,15 +49,16 @@ public class PublicacionService {
 	this.PublicacionDao.saveContacto(contacto);
     }
 
-    public List<Publicacion> getPublicacionesMasVistas(String tipo) {
+    public List<Publicacion> getPublicacionesMasVistas(String tipo)
+	    throws CacheException {
 	return this.PublicacionDao.getPublicacionesMasVistas(tipo);
     }
 
-    public List<Publicacion> getPublicacionesDestacadas() {
+    public List<Publicacion> getPublicacionesDestacadas() throws CacheException {
 	return this.PublicacionDao.getPublicacionesDestacadas();
     }
 
-    public List<Publicacion> getPublicacionesPortada() {
+    public List<Publicacion> getPublicacionesPortada() throws CacheException {
 	return this.PublicacionDao.getPublicacionesPortada();
     }
 

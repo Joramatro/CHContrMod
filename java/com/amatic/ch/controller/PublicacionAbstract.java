@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import javax.cache.CacheException;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -15,8 +16,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.akismet.Akismet;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -67,31 +66,32 @@ public abstract class PublicacionAbstract {
 	    String nombre, String email, String puntos, String comentario,
 	    String web, String nbrComment, HttpServletResponse response)
 	    throws Exception {
-	String keyakismet = "49f8a3bfb431";
-	if (KEYAKIS != null) {
-	    keyakismet = KEYAKIS;
-	}
-	Akismet akismet = new Akismet(keyakismet, "http://www." + DOMAIN);
-	boolean isSpam = akismet.commentCheck(request.getRemoteAddr(),
-		request.getHeader("User-agent"), request.getHeader("referer"),
-		"", // permalink
-		"comment", // comment type
-		"", // author
-		"", // email
-		"", comentario, // Text to check
-		request.getParameterMap());
+	// String keyakismet = "49f8a3bfb431";
+	// if (KEYAKIS != null) {
+	// keyakismet = KEYAKIS;
+	// }
+	// Akismet akismet = new Akismet(keyakismet, "http://www." + DOMAIN);
+	// boolean isSpam = akismet.commentCheck(request.getRemoteAddr(),
+	// request.getHeader("User-agent"), request.getHeader("referer"),
+	// "", // permalink
+	// "comment", // comment type
+	// nombre, // author
+	// email, // email
+	// "", comentario, // Text to check
+	// request.getParameterMap());
 
-	if (isSpam || (comentario != null && comentario.length() < 3)) {
-	    // Mail.sendMail(
-	    // "Comentario Spam Akimet con ip "
-	    // + WebUtils.getClienAddress(request) + " y email: "
-	    // + email + "\n Dejado en:" + url + "\n Comentario:"
-	    // + comentario + "\n Web:" + web + "\n Puntos:"
-	    // + puntos + "\n Nombre:" + nombre,
-	    // "Spam Akimet comentario en " + BRAND);
-	    // response.sendRedirect("/");
-	    // response.flushBuffer();
-	    throw new UnknownResourceException("invalid comment");
+	if (/* isSpam || */(comentario != null && comentario.length() < 3)
+		|| (web != null && web.length() > 0)) {
+	    this.sendMail(
+		    "Comentario Spam Akimet con ip "
+			    + WebUtils.getClienAddress(request) + " y email: "
+			    + email + "\n Dejado en:" + url + "\n Comentario:"
+			    + comentario + "\n Web:" + web + "\n Puntos:"
+			    + puntos + "\n Nombre:" + nombre,
+		    "Spam Akimet comentario en " + BRAND);
+	    response.sendRedirect("/");
+	    response.flushBuffer();
+	    // throw new UnknownResourceException("invalid comment");
 	} else {
 	    String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
 		    .toLowerCase());
@@ -161,7 +161,7 @@ public abstract class PublicacionAbstract {
 
     }
 
-    void setPublicaciones(ModelMap model, String tipo) {
+    void setPublicaciones(ModelMap model, String tipo) throws CacheException {
 	List<Publicacion> publicaciones = publicacionService
 		.getPublicaciones(tipo);
 
@@ -273,7 +273,8 @@ public abstract class PublicacionAbstract {
     }
 
     String setPublicacion(String url, HttpServletRequest request, ModelMap model)
-	    throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	    throws NoSuchAlgorithmException, UnsupportedEncodingException,
+	    CacheException {
 	String keyNormalizada = WebUtils.SHA1(url.replaceAll("-", " ")
 		.toLowerCase());
 	String view = "ebook";
